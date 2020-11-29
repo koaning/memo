@@ -10,6 +10,7 @@ def memweb(url):
     Arguments:
         filepath: path to write data to
     """
+
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -17,5 +18,7 @@ def memweb(url):
             with httpx.Client() as client:
                 _ = client.post(url, data={**kwargs, **result})
             return result
+
         return wrapper
+
     return decorator

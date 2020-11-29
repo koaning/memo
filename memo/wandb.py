@@ -11,6 +11,7 @@ def memwandb(project, **config):
         project: name of the wandb project you want to send to
         config: optional extra keyword arguments to send along
     """
+
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -19,5 +20,7 @@ def memwandb(project, **config):
             result = func(*args, **kwargs)
             wandb.log({**kwargs, **result})
             return result
+
         return wrapper
+
     return decorator

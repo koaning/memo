@@ -51,7 +51,8 @@ for size in range(2, 40):
     for n_sim in [1000, 10000, 100000]:
         birthday_experiment(class_size=size, n_sim=n_sim)
 
-# `data` is now a list of dictionaries
+# `data` is now a list of dictionaries 
+# these have`n_sim`, `class_size` and `est_proba` as keys
 # can easily be turned into a dataframe via `pd.DataFrame(data)`
 ```
 

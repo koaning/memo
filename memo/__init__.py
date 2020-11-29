@@ -21,13 +21,16 @@ def memlist(data):
     Arguments:
         data: a list to push received data into
     """
+
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
             data.append({**kwargs, **result})
             return result
+
         return wrapper
+
     return decorator
 
 
@@ -38,14 +41,17 @@ def memfile(filepath):
     Arguments:
         filepath: path to write data to
     """
+
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
-            with open(filepath, 'a') as f:
+            with open(filepath, "a") as f:
                 f.write(json.dumps({**kwargs, **result}) + "\n")
             return result
+
         return wrapper
+
     return decorator
 
 
@@ -56,11 +62,14 @@ def memstdout(print_fn=print):
     Arguments:
         print_fn: option to overwrite the print_fn that is used, this allows you to attach a logger instead
     """
+
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
             print_fn({**kwargs, **result})
             return result
+
         return wrapper
+
     return decorator
