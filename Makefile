@@ -1,8 +1,8 @@
 black:
-	black tokenwiser tests setup.py --check
+	black memo tests setup.py --check
 
 flake:
-	flake8 tokenwiser tests setup.py
+	flake8 memo tests setup.py
 
 test:
 	pytest
