@@ -4,6 +4,12 @@ import httpx
 
 
 def memweb(url):
+    """
+    Remembers input/output of a function by sending it over http to an endpoint.
+
+    Arguments:
+        filepath: path to write data to
+    """
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
