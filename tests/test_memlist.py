@@ -42,3 +42,30 @@ def test_base_multiple_calls():
     for i in range(1, 5):
         count_values(a=1)
         assert len(data) == i
+
+
+def test_base_args():
+    data = []
+
+    @memlist(data=data)
+    def count_values(a, b, **kwargs):
+        return {'sum': sum(kwargs.values())}
+
+    count_values(1, b=2, c=1)
+    assert len(data) == 1
+    assert data[0]['b'] == 2
+    assert data[0]['c'] == 1
+
+
+def test_base_args_included():
+    data = []
+
+    @memlist(data=data)
+    def count_values(a, b, **kwargs):
+        return {'sum': sum(kwargs.values())}
+
+    count_values(a=1, b=2, c=1)
+    assert len(data) == 1
+    assert data[0]['a'] == 1
+    assert data[0]['b'] == 2
+    assert data[0]['c'] == 1
