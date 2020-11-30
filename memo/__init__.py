@@ -1,6 +1,7 @@
 from ._error import NotInstalled
 from ._grid import grid, random_grid
 from ._base import memlist, memfile, memstdout
+from ._common import capture_time
 
 try:
     from memo._http import memweb
@@ -22,4 +23,5 @@ __all__ = [
     "memstdout",
     "memweb",
     "memwandb",
+    "capture_time"
 ]

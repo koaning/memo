@@ -2,8 +2,7 @@
 
 # memo
 
-Decorators that help you remember.
-
+Decorators that make things "a whole log simpler".
 
 ## Installation 
 
@@ -114,7 +113,7 @@ def birthday_experiment(class_size, n_sim):
     proba = np.mean(n_uniq != class_size)
     return {"est_proba": proba}
 
-for settings in grid(size=range(2, 40), n_sim=[1000, 10000, 100000]):
+for settings in grid(class_size=range(2, 40), n_sim=[1000, 10000, 100000]):
     birthday_experiment(**settings)
 ```
 
