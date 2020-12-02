@@ -12,7 +12,7 @@ def memlist(data):
     Example
 
     ```python
-    from meme import memlist
+    from memo import memlist
 
     data = []
 
@@ -57,19 +57,15 @@ def memfile(filepath):
         filepath: path to write data to
 
     ```python
-    from meme import memfile
+    from memo import memfile
 
-    data = []
-
-    @memfile(data=data)
+    @memfile(filepath="tmpfile.jsonl")
     def simulate(a, b):
         return {"result": a + b}
 
     for a in range(5):
         for b in range(10):
-            data.append(simulate(a=a, b=b)
-
-    assert len(data) == 50
+            simulate(a=a, b=b)
     ```
     """
 
@@ -94,18 +90,20 @@ def memfunc(callback):
         callback: callback function that receives a dictionary with logged info
 
     ```python
-    from meme import memfunc
+    from memo import memfunc, memlist
 
     data = []
 
+    @memlist(data=data)
     @memfunc(callback=print)
     def simulate(a, b):
         return {"result": a + b}
 
     for a in range(5):
         for b in range(10):
-            data.append(simulate(a=a, b=b)
+            simulate(a=a, b=b)
 
+    # You should now see print statements, and this holds:
     assert len(data) == 50
     ```
     """

@@ -6,6 +6,8 @@ base_packages = []
 test_packages = [
     "flake8>=3.6.0",
     "pytest>=4.0.2",
+    "numpy>=1.19.4",
+    "exdown>=0.7.1"
 ]
 
 util_packages = [

@@ -16,14 +16,14 @@ from using [rich](https://github.com/willmcgugan/rich) or
 import numpy as np
 from rich.progress import Progress
 
-from memo import memlist, memfile, grid, capture_time
+from memo import memlist, memfile, grid, time_taken
 
 data = []
 
 
 @memfile(filepath="results.jsonl")
 @memlist(data=data)
-@capture_time(time_taken=True)
+@time_taken()
 def birthday_experiment(class_size, n_sim):
     """Simulates the birthday paradox. Vectorized = Fast!"""
     sims = np.random.randint(1, 365 + 1, (n_sim, class_size))
@@ -33,7 +33,7 @@ def birthday_experiment(class_size, n_sim):
     return {"est_proba": proba}
 
 
-settings = list(grid(class_size=range(5, 50), n_sim=[100, 10_000, 1_000_000]))
+settings = list(grid(class_size=[10, 20, 30], n_sim=[100, 10_000, 1_000_000]))
 
 
 with Progress() as progress:
@@ -50,14 +50,14 @@ with Progress() as progress:
 import numpy as np
 import tqdm
 
-from memo import memlist, memfile, grid, capture_time
+from memo import memlist, memfile, grid, time_taken
 
 data = []
 
 
 @memfile(filepath="results.jsonl")
 @memlist(data=data)
-@capture_time(time_taken=True)
+@time_taken()
 def birthday_experiment(class_size, n_sim):
     """Simulates the birthday paradox. Vectorized = Fast!"""
     sims = np.random.randint(1, 365 + 1, (n_sim, class_size))
@@ -67,7 +67,7 @@ def birthday_experiment(class_size, n_sim):
     return {"est_proba": proba}
 
 
-settings = list(grid(class_size=range(5, 50), n_sim=[100, 10_000, 1_000_000]))
+settings = list(grid(class_size=[10, 20, 30], n_sim=[100, 10_000, 1_000_000]))
 
 for setting in tqdm.tqdm(settings):
     birthday_experiment(**setting)

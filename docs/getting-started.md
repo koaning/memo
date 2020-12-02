@@ -119,13 +119,13 @@ The library also offers utilities to make the creation of these grids even easie
 
 ```python
 import numpy as np 
-from memo import memlist, memfile, grid, capture_time
+from memo import memlist, memfile, grid, time_taken
 
 data = []
 
 @memfile(filepath="results.json")
 @memlist(data=data)
-@capture_time(time_taken=True)
+@time_taken()
 def birthday_experiment(class_size, n_sim):
     """Simulates the birthday paradox. Vectorized = Fast!"""
     sims = np.random.randint(1, 365 + 1, (n_sim, class_size))
@@ -145,10 +145,15 @@ that these decorators make it more fun to actually log the results of experiment
 It's nice to be able to just add a decorator to a function and not have to 
 worry about logging the statistics.
 
-The library also offers extra features to make things a whole *log* simpler. 
+The library also offers extra features to make things a whole *log* simpler.  
 
-- `@memfunc` allows you to attach a callback, like `print`
-- `@memweb` allows you to post the data via http to a webserver 
-- `@memwand` allows you to post results to [weights and biases](https://wandb.ai/).
+- `memlists` sends the json blobs to a list
+- `memfile` sends the json blobs to a file 
+- `memweb` sends the json blobs to a server via http-post requests
+- `memfunc` sends the data to a callable that you supply, like `print`
+- `memwand` sends the json blobs to a [weights and biases](https://wandb.ai/) endpoint
 - `grid` generates a convenient grid for your experiments
 - `random_grid` generates a randomized grid for your experiments
+- `time_taken` also logs the time the function takes to run
+
+Check out the [API docs]() to explore these in more detail.
