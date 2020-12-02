@@ -1,4 +1,4 @@
-# Grid Creators
+# Utility Methods
 
 ::: memo._grid.grid
     rendering:
@@ -10,9 +10,6 @@
     rendering:
         show_root_full_path: false
         show_root_heading: true
-
-
-# Utility Decorators
 
 ::: memo.time_taken
     rendering:
