@@ -6,7 +6,7 @@ import textwrap
 
 from memo import memlist, memfunc, memfile, time_taken, grid, random_grid
 
-files = [str(p) for p in pathlib.Path("docs").glob("*.md")] + ["readme.md"]
+files = [str(p) for p in pathlib.Path("docs").glob("*.md")] + ["README.md"]
 functions = [memlist, memfunc, memfile, time_taken, grid, random_grid]
 
 
