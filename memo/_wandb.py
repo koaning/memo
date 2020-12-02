@@ -22,6 +22,7 @@ def memwandb(project, **config):
 
     ```python
     import os
+    from memo import wemwandb, time_taken
 
     # You probably want to run with this setting to prevent a
     # whole lot of output suddenly appearing.
@@ -31,7 +32,7 @@ def memwandb(project, **config):
 
 
     @memwandb(project="birthday")
-    @capture_time()
+    @time_taken()
     def birthday_experiment(class_size, n_sim):
         sims = np.random.randint(1, 365 + 1, (n_sim, class_size))
         sort_sims = np.sort(sims, axis=1)

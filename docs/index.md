@@ -4,13 +4,13 @@
 
 You can install this package via pip;
 
-```python
+```
 pip install memo
 ```
 
 You might want to install extra dependencies depending on your use-case. 
 
-```python
+```
 pip install "memo[web]"
 pip install "memo[wandb]"
 ```
@@ -53,6 +53,3 @@ This library also offers decorators to pipe to other sources.
 - `grid` generates a convenient grid for your experiments
 - `random_grid` generates a randomized grid for your experiments
 - `time_taken` also logs the time the function takes to run
-
-The nice thing about being able to log results to a file or to the web is that 
-you can also more easily parallize your jobs too!

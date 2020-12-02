@@ -12,6 +12,8 @@ def grid(**kwargs):
     Example
 
     ```python
+    from memo import grid
+
     settings = list(grid(a=[1,2], b=[1, 2]))
     expected = [
          {'a': 1, 'b': 1},
@@ -42,6 +44,8 @@ def random_grid(n=30, **kwargs):
     Example
 
     ```python
+    from memo import random_grid
+
     settings = list(random_grid(n=30, a=[1,2], b=[1, 2]))
     assert len(settings) == 30
     ```

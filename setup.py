@@ -3,10 +3,7 @@ from setuptools import setup, find_packages
 
 base_packages = []
 
-test_packages = [
-    "flake8>=3.6.0",
-    "pytest>=4.0.2",
-]
+test_packages = ["flake8>=3.6.0", "pytest>=4.0.2", "numpy>=1.19.4", "exdown>=0.7.1", "rich>=9.2.0", "tqdm>=4.54.0"]
 
 util_packages = [
     "jupyter>=1.0.0",
