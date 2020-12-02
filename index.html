@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#what-does-this-package-do" class="md-skip">
+        <a href="#installation" class="md-skip">
           Skip to content
         </a>
       
@@ -224,6 +224,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-does-this-package-do" class="md-nav__link">
     What does this package do?
   </a>
@@ -231,8 +238,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    Installation
+  <a href="#features" class="md-nav__link">
+    Features
   </a>
   
 </li>
@@ -320,7 +327,7 @@
 
   <li class="md-nav__item">
     <a href="api.html" class="md-nav__link">
-      Base
+      Grab
     </a>
   </li>
 
@@ -364,6 +371,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-does-this-package-do" class="md-nav__link">
     What does this package do?
   </a>
@@ -371,8 +385,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    Installation
+  <a href="#features" class="md-nav__link">
+    Features
   </a>
   
 </li>
@@ -394,24 +408,54 @@
                   </a>
                 
                 
-                  <h1>Home</h1>
-                
-                <blockquote>
-<p>"a whole log simpler" ... literally!</p>
-</blockquote>
-<h2 id="what-does-this-package-do">What does this package do?<a class="headerlink" href="#what-does-this-package-do" title="Permanent link">&para;</a></h2>
-<p>This packages contains decorators that can help you route the input/output
-of functions to files/dataframes and other sources. It's useful in logging
-results from simulations or machine learning experiments.</p>
+                <h1 style="color: black; font-size: 2em; font-weight: 800;">"a whole log simpler" ... literally!</h1>
+
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <p>You can install this package via pip;</p>
 <div class="codehilite"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="n">memo</span>
 </code></pre></div>
 
-<p>You might want to install extra dependencies depending on your usecase. </p>
-<div class="codehilite"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;memo[httpx]&quot;</span>
+<p>You might want to install extra dependencies depending on your use-case. </p>
+<div class="codehilite"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;memo[web]&quot;</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;memo[wandb]&quot;</span>
 </code></pre></div>
+
+<h2 id="what-does-this-package-do">What does this package do?<a class="headerlink" href="#what-does-this-package-do" title="Permanent link">&para;</a></h2>
+<p>This packages contains decorators that can help you route the input/output
+of functions to files/dataframes and other sources. It's useful in logging
+results from simulations or machine learning experiments.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+<span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">memfile</span>
+
+<span class="nd">@memfile</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;results.jsonl&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">birthday_experiment</span><span class="p">(</span><span class="n">class_size</span><span class="p">,</span> <span class="n">n_sim</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simulates the birthday paradox. Vectorized = Fast!&quot;&quot;&quot;</span>
+    <span class="n">sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">365</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">n_sim</span><span class="p">,</span> <span class="n">class_size</span><span class="p">))</span>
+    <span class="n">sort_sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">sims</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">n_uniq</span> <span class="o">=</span> <span class="p">(</span><span class="n">sort_sims</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">!=</span> <span class="n">sort_sims</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;est_proba&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">n_uniq</span> <span class="o">!=</span> <span class="n">class_size</span><span class="p">)}</span>
+
+<span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">40</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">n_sim</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">100000</span><span class="p">]:</span>
+        <span class="n">birthday_experiment</span><span class="p">(</span><span class="n">class_size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">n_sim</span><span class="o">=</span><span class="n">n_sim</span><span class="p">)</span>
+</code></pre></div>
+
+<p>The decorator ensures that all the keyword arguments and dictionary 
+outputs of a function are logged. To see how it works in more detail, check the <a href="/getting-started.html">quickstart</a></p>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
+<p>This library also offers decorators to pipe to other sources. </p>
+<ul>
+<li><code>memlists</code> sends the json blobs to a list</li>
+<li><code>memfile</code> sends the json blobs to a file </li>
+<li><code>memweb</code> sends the json blobs to a server via http-post requests</li>
+<li><code>memfunc</code> sends the data to a callable that you supply, like <code>print</code></li>
+<li><code>memwand</code> sends the json blobs to a <a href="https://wandb.ai/">weights and biases</a> endpoint</li>
+<li><code>grid</code> generates a convenient grid for your experiments</li>
+<li><code>random_grid</code> generates a randomized grid for your experiments</li>
+<li><code>time_taken</code> also logs the time the function takes to run</li>
+</ul>
+<p>The nice thing about being able to log results to a file or to the web is that 
+you can also more easily parallize your jobs too!</p>
                 
               
               

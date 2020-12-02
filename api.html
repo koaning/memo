@@ -20,7 +20,7 @@
     
     
       
-        <title>Base - Memo Docs</title>
+        <title>Grab - Memo Docs</title>
       
     
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#from-memo-import-memlist" class="md-skip">
+        <a href="#decorators-that-capture-data" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Base
+              Grab
             
           </span>
         </div>
@@ -289,12 +289,12 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Base
+        Grab
         <span class="md-nav__icon md-icon"></span>
       </label>
     
     <a href="api.html" class="md-nav__link md-nav__link--active">
-      Base
+      Grab
     </a>
     
       
@@ -325,8 +325,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#memo._base.memstdout" class="md-nav__link">
-    memstdout()
+  <a href="#memo._base.memfunc" class="md-nav__link">
+    memfunc()
   </a>
   
 </li>
@@ -407,8 +407,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#memo._base.memstdout" class="md-nav__link">
-    memstdout()
+  <a href="#memo._base.memfunc" class="md-nav__link">
+    memfunc()
   </a>
   
 </li>
@@ -444,7 +444,7 @@
                   </a>
                 
                 
-                <h1 id="from-memo-import-memlist"><code>from memo import memlist</code><a class="headerlink" href="#from-memo-import-memlist" title="Permanent link">&para;</a></h1>
+                <h1 id="decorators-that-capture-data">Decorators that Capture Data<a class="headerlink" href="#decorators-that-capture-data" title="Permanent link">&para;</a></h1>
 <div class="doc doc-object doc-function">
 <h2 class="doc doc-heading" id="memo._base.memlist">
 
@@ -486,11 +486,20 @@ memlist<span class="p">(</span><span class="n">data</span><span class="p">)</spa
 <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">{</span><span class="s2">"result"</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">}</span>
 
+<span class="c1"># The `@memlist` decorator will allow the inputs/outputs to</span>
+<span class="c1"># be saved in the provided `data` list.</span>
 <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">simulate</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">simulate</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
 
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">50</span>
+
+<span class="c1"># If we keep running more loops the list will grow.</span>
+<span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">20</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">simulate</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">100</span>
 </code></pre>
 </div>
 <details class="quote">
@@ -514,11 +523,20 @@ memlist<span class="p">(</span><span class="n">data</span><span class="p">)</spa
 <span class="sd">    def simulate(a, b):</span>
 <span class="sd">        return {"result": a + b}</span>
 
+<span class="sd">    # The `@memlist` decorator will allow the inputs/outputs to</span>
+<span class="sd">    # be saved in the provided `data` list.</span>
 <span class="sd">    for a in range(5):</span>
 <span class="sd">        for b in range(10):</span>
-<span class="sd">            data.append(simulate(a=a, b=b)</span>
+<span class="sd">            simulate(a=a, b=b)</span>
 
 <span class="sd">    assert len(data) == 50</span>
+
+<span class="sd">    # If we keep running more loops the list will grow.</span>
+<span class="sd">    for a in range(6, 10 + 1):</span>
+<span class="sd">        for b in range(11, 20 + 1):</span>
+<span class="sd">            simulate(a=a, b=b)</span>
+
+<span class="sd">    assert len(data) == 100</span>
 <span class="sd">    ```</span>
 <span class="sd">    """</span>
 
@@ -568,6 +586,22 @@ memfile<span class="p">(</span><span class="n">filepath</span><span class="p">)<
 </tr>
 </tbody>
 </table>
+<div class="codehilite">
+<pre><span></span><code><span class="kn">from</span> <span class="nn">meme</span> <span class="kn">import</span> <span class="n">memfile</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="nd">@memfile</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"result"</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">simulate</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">50</span>
+</code></pre>
+</div>
 <details class="quote">
           <summary>Source code in <code>memo/_base.py</code></summary>
           <div class="highlight">
@@ -577,6 +611,22 @@ memfile<span class="p">(</span><span class="n">filepath</span><span class="p">)<
 
 <span class="sd">    Arguments:</span>
 <span class="sd">        filepath: path to write data to</span>
+
+<span class="sd">    ```python</span>
+<span class="sd">    from meme import memfile</span>
+
+<span class="sd">    data = []</span>
+
+<span class="sd">    @memfile(data=data)</span>
+<span class="sd">    def simulate(a, b):</span>
+<span class="sd">        return {"result": a + b}</span>
+
+<span class="sd">    for a in range(5):</span>
+<span class="sd">        for b in range(10):</span>
+<span class="sd">            data.append(simulate(a=a, b=b)</span>
+
+<span class="sd">    assert len(data) == 50</span>
+<span class="sd">    ```</span>
 <span class="sd">    """</span>
 
     <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
@@ -596,13 +646,13 @@ memfile<span class="p">(</span><span class="n">filepath</span><span class="p">)<
 </div>
 </div>
 <div class="doc doc-object doc-function">
-<h2 class="doc doc-heading" id="memo._base.memstdout">
+<h2 class="doc doc-heading" id="memo._base.memfunc">
 
         <code class="highlight language-python">
-memstdout<span class="p">(</span><span class="n">print_fn</span><span class="o">=&lt;</span><span class="n">built</span><span class="o">-</span><span class="ow">in</span> <span class="n">function</span> <span class="nb">print</span><span class="o">&gt;</span><span class="p">)</span>        </code>
+memfunc<span class="p">(</span><span class="n">callback</span><span class="p">)</span>        </code>
 
 
-      <a class="headerlink" href="#memo._base.memstdout" title="Permanent link">&para;</a></h2>
+      <a class="headerlink" href="#memo._base.memfunc" title="Permanent link">&para;</a></h2>
 <div class="doc doc-contents first">
 <p>Remembers input/output of a function by printing.</p>
 <p><strong>Parameters:</strong></p>
@@ -617,31 +667,63 @@ memstdout<span class="p">(</span><span class="n">print_fn</span><span class="o">
 </thead>
 <tbody>
 <tr>
-<td><code>print_fn</code></td>
+<td><code>callback</code></td>
 <td><code></code></td>
 <td>
-<p>option to overwrite the print_fn that is used, this allows you to attach a logger instead</p>
+<p>callback function that receives a dictionary with logged info</p>
 </td>
-<td><code>&lt;built-in function print&gt;</code></td>
+<td><em>required</em></td>
 </tr>
 </tbody>
 </table>
+<div class="codehilite">
+<pre><span></span><code><span class="kn">from</span> <span class="nn">meme</span> <span class="kn">import</span> <span class="n">memfunc</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="nd">@memfunc</span><span class="p">(</span><span class="n">callback</span><span class="o">=</span><span class="nb">print</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"result"</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">simulate</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">50</span>
+</code></pre>
+</div>
 <details class="quote">
           <summary>Source code in <code>memo/_base.py</code></summary>
           <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">memstdout</span><span class="p">(</span><span class="n">print_fn</span><span class="o">=</span><span class="nb">print</span><span class="p">):</span>
+<pre><span></span><code><span class="k">def</span> <span class="nf">memfunc</span><span class="p">(</span><span class="n">callback</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Remembers input/output of a function by printing.</span>
 
 <span class="sd">    Arguments:</span>
-<span class="sd">        print_fn: option to overwrite the print_fn that is used, this allows you to attach a logger instead</span>
+<span class="sd">        callback: callback function that receives a dictionary with logged info</span>
+
+<span class="sd">    ```python</span>
+<span class="sd">    from meme import memfunc</span>
+
+<span class="sd">    data = []</span>
+
+<span class="sd">    @memfunc(callback=print)</span>
+<span class="sd">    def simulate(a, b):</span>
+<span class="sd">        return {"result": a + b}</span>
+
+<span class="sd">    for a in range(5):</span>
+<span class="sd">        for b in range(10):</span>
+<span class="sd">            data.append(simulate(a=a, b=b)</span>
+
+<span class="sd">    assert len(data) == 50</span>
+<span class="sd">    ```</span>
 <span class="sd">    """</span>
 
     <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
         <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
         <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="n">print_fn</span><span class="p">({</span><span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="o">**</span><span class="n">result</span><span class="p">})</span>
+            <span class="n">callback</span><span class="p">({</span><span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="o">**</span><span class="n">result</span><span class="p">})</span>
             <span class="k">return</span> <span class="n">result</span>
 
         <span class="k">return</span> <span class="n">wrapper</span>
@@ -720,6 +802,11 @@ memwandb<span class="p">(</span><span class="n">project</span><span class="p">,<
       <a class="headerlink" href="#memo._wandb.memwandb" title="Permanent link">&para;</a></h2>
 <div class="doc doc-contents first">
 <p>Remembers input/output of a function by sending it to wandb.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To use this tool, you may need to install extra dependencies.</p>
+<p><code>pip install memo[wandb]</code></p>
+</div>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -756,6 +843,22 @@ memwandb<span class="p">(</span><span class="n">project</span><span class="p">,<
 <span class="c1"># You probably want to run with this setting to prevent a</span>
 <span class="c1"># whole lot of output suddenly appearing.</span>
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"WANDB_SILENT"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"true"</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+<span class="nd">@memwandb</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="s2">"birthday"</span><span class="p">)</span>
+<span class="nd">@capture_time</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">birthday_experiment</span><span class="p">(</span><span class="n">class_size</span><span class="p">,</span> <span class="n">n_sim</span><span class="p">):</span>
+    <span class="n">sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">365</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">n_sim</span><span class="p">,</span> <span class="n">class_size</span><span class="p">))</span>
+    <span class="n">sort_sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">sims</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">n_uniq</span> <span class="o">=</span> <span class="p">(</span><span class="n">sort_sims</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">!=</span> <span class="n">sort_sims</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">proba</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">n_uniq</span> <span class="o">!=</span> <span class="n">class_size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"est_proba"</span><span class="p">:</span> <span class="n">proba</span><span class="p">}</span>
+
+<span class="n">settings</span> <span class="o">=</span> <span class="n">grid</span><span class="p">(</span><span class="n">class_size</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span> <span class="n">n_sim</span><span class="o">=</span><span class="p">[</span><span class="mi">1_000</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">,</span> <span class="mi">1_000_000</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">:</span>
+    <span class="n">birthday_experiment</span><span class="p">(</span><span class="o">**</span><span class="n">setting</span><span class="p">)</span>
 </code></pre>
 </div>
 <details class="quote">
@@ -764,6 +867,13 @@ memwandb<span class="p">(</span><span class="n">project</span><span class="p">,<
 <pre><span></span><code><span class="k">def</span> <span class="nf">memwandb</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Remembers input/output of a function by sending it to wandb.</span>
+
+<span class="sd">    Warning:</span>
+<span class="sd">        To use this tool, you may need to install extra dependencies.</span>
+
+<span class="sd">        ```</span>
+<span class="sd">        pip install memo[wandb]</span>
+<span class="sd">        ```</span>
 
 <span class="sd">    Arguments:</span>
 <span class="sd">        project: name of the wandb project you want to send to</span>
@@ -777,6 +887,22 @@ memwandb<span class="p">(</span><span class="n">project</span><span class="p">,<
 <span class="sd">    # You probably want to run with this setting to prevent a</span>
 <span class="sd">    # whole lot of output suddenly appearing.</span>
 <span class="sd">    os.environ["WANDB_SILENT"] = "true"</span>
+
+<span class="sd">    data = []</span>
+
+
+<span class="sd">    @memwandb(project="birthday")</span>
+<span class="sd">    @capture_time()</span>
+<span class="sd">    def birthday_experiment(class_size, n_sim):</span>
+<span class="sd">        sims = np.random.randint(1, 365 + 1, (n_sim, class_size))</span>
+<span class="sd">        sort_sims = np.sort(sims, axis=1)</span>
+<span class="sd">        n_uniq = (sort_sims[:, 1:] != sort_sims[:, :-1]).sum(axis = 1) + 1</span>
+<span class="sd">        proba = np.mean(n_uniq != class_size)</span>
+<span class="sd">        return {"est_proba": proba}</span>
+
+<span class="sd">    settings = grid(class_size=range(2, 40), n_sim=[1_000, 10_000, 100_000, 1_000_000])</span>
+<span class="sd">    for setting in settings:</span>
+<span class="sd">        birthday_experiment(**setting)</span>
 <span class="sd">    ```</span>
 <span class="sd">    """</span>
 
@@ -784,6 +910,7 @@ memwandb<span class="p">(</span><span class="n">project</span><span class="p">,<
         <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
         <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="kn">import</span> <span class="nn">logging</span>
+
             <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">"wandb"</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
             <span class="n">wandb</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">)</span>

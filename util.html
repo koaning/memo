@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#from-memo-import-memlist" class="md-skip">
+        <a href="#utility-methods" class="md-skip">
           Skip to content
         </a>
       
@@ -281,7 +281,7 @@
 
   <li class="md-nav__item">
     <a href="api.html" class="md-nav__link">
-      Base
+      Grab
     </a>
   </li>
 
@@ -336,6 +336,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#memo._util.time_taken" class="md-nav__link">
+    time_taken()
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -385,6 +392,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#memo._util.time_taken" class="md-nav__link">
+    time_taken()
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -402,7 +416,7 @@
                   </a>
                 
                 
-                <h1 id="from-memo-import-memlist"><code>from memo import memlist</code><a class="headerlink" href="#from-memo-import-memlist" title="Permanent link">&para;</a></h1>
+                <h1 id="utility-methods">Utility Methods<a class="headerlink" href="#utility-methods" title="Permanent link">&para;</a></h1>
 <div class="doc doc-object doc-function">
 <h2 class="doc doc-heading" id="memo._grid.grid">
 
@@ -412,10 +426,75 @@ grid<span class="p">(</span><span class="o">**</span><span class="n">kwargs</spa
 
       <a class="headerlink" href="#memo._grid.grid" title="Permanent link">&para;</a></h2>
 <div class="doc doc-contents first">
+<p>Generates a grid of settings.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kwargs</code></td>
+<td><code></code></td>
+<td>
+<p>the name of parameter is the key while the values represent items to iterate over</p>
+</td>
+<td><code>{}</code></td>
+</tr>
+</tbody>
+</table>
+<p>Example</p>
+<div class="codehilite">
+<pre><span></span><code><span class="n">settings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">b</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+<span class="n">expected</span> <span class="o">=</span> <span class="p">[</span>
+     <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+     <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+     <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+     <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="p">]</span>
+<span class="k">assert</span> <span class="n">settings</span> <span class="o">==</span> <span class="n">expected</span>
+
+<span class="k">def</span> <span class="nf">calc_sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"c"</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">calc_sum</span><span class="p">(</span><span class="o">**</span><span class="n">setting</span><span class="p">))</span>
+</code></pre>
+</div>
 <details class="quote">
           <summary>Source code in <code>memo/_grid.py</code></summary>
           <div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="nf">grid</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Generates a grid of settings.</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        kwargs: the name of parameter is the key while the values represent items to iterate over</span>
+
+<span class="sd">    Example</span>
+
+<span class="sd">    ```python</span>
+<span class="sd">    settings = list(grid(a=[1,2], b=[1, 2]))</span>
+<span class="sd">    expected = [</span>
+<span class="sd">         {'a': 1, 'b': 1},</span>
+<span class="sd">         {'a': 1, 'b': 2},</span>
+<span class="sd">         {'a': 2, 'b': 1},</span>
+<span class="sd">         {'a': 2, 'b': 2}</span>
+<span class="sd">    ]</span>
+<span class="sd">    assert settings == expected</span>
+
+<span class="sd">    def calc_sum(a, b):</span>
+<span class="sd">        return {"c": a + b}</span>
+
+<span class="sd">    for setting in settings:</span>
+<span class="sd">        print(calc_sum(**setting))</span>
+<span class="sd">    ```</span>
+<span class="sd">    """</span>
     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">it</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">values</span><span class="p">()]):</span>
         <span class="k">yield</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">c</span><span class="p">)}</span>
 </code></pre>
@@ -432,12 +511,176 @@ random_grid<span class="p">(</span><span class="n">n</span><span class="o">=</sp
 
       <a class="headerlink" href="#memo._grid.random_grid" title="Permanent link">&para;</a></h2>
 <div class="doc doc-contents first">
+<p>Generates a random grid settings.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kwargs</code></td>
+<td><code></code></td>
+<td>
+<p>the name of parameter is the key while the values represent items to iterate over</p>
+</td>
+<td><code>{}</code></td>
+</tr>
+</tbody>
+</table>
+<p>Example</p>
+<div class="codehilite">
+<pre><span></span><code><span class="n">settings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">random_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">b</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span> <span class="o">==</span> <span class="mi">30</span>
+</code></pre>
+</div>
 <details class="quote">
           <summary>Source code in <code>memo/_grid.py</code></summary>
           <div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="nf">random_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Generates a random grid settings.</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        kwargs: the name of parameter is the key while the values represent items to iterate over</span>
+
+<span class="sd">    Example</span>
+
+<span class="sd">    ```python</span>
+<span class="sd">    settings = list(random_grid(n=30, a=[1,2], b=[1, 2]))</span>
+<span class="sd">    assert len(settings) == 30</span>
+<span class="sd">    ```</span>
+<span class="sd">    """</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
         <span class="k">yield</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h2 class="doc doc-heading" id="memo._util.time_taken">
+
+        <code class="highlight language-python">
+time_taken<span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rounding</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>        </code>
+
+
+      <a class="headerlink" href="#memo._util.time_taken" title="Permanent link">&para;</a></h2>
+<div class="doc doc-contents first">
+<p>Adds additional time-based information to output.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>minutes</code></td>
+<td><code></code></td>
+<td>
+<p>log minutes instead of seconds</p>
+</td>
+<td><code>False</code></td>
+</tr>
+<tr>
+<td><code>rounding</code></td>
+<td><code></code></td>
+<td>
+<p>number of decimals to round the timing to</p>
+</td>
+<td><code>2</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples:</strong></p>
+<br />
+<div class="codehilite">
+<pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">memlist</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">time_taken</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+<span class="nd">@memlist</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<span class="nd">@time_taken</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">birthday_experiment</span><span class="p">(</span><span class="n">class_size</span><span class="p">,</span> <span class="n">n_sim</span><span class="p">):</span>
+    <span class="n">sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">365</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">n_sim</span><span class="p">,</span> <span class="n">class_size</span><span class="p">))</span>
+    <span class="n">sort_sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">sims</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">n_uniq</span> <span class="o">=</span> <span class="p">(</span><span class="n">sort_sims</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">!=</span> <span class="n">sort_sims</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">proba</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">n_uniq</span> <span class="o">!=</span> <span class="n">class_size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"est_proba"</span><span class="p">:</span> <span class="n">proba</span><span class="p">}</span>
+
+
+<span class="n">settings</span> <span class="o">=</span> <span class="n">grid</span><span class="p">(</span><span class="n">class_size</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="n">n_sim</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">,</span> <span class="mi">1_000_000</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">:</span>
+    <span class="n">birthday_experiment</span><span class="p">(</span><span class="o">**</span><span class="n">setting</span><span class="p">)</span>
+</code></pre>
+</div>
+<details class="quote">
+          <summary>Source code in <code>memo/_util.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">time_taken</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rounding</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Adds additional time-based information to output.</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        minutes: log minutes instead of seconds</span>
+<span class="sd">        rounding: number of decimals to round the timing to</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    ```python</span>
+<span class="sd">    import numpy as np</span>
+
+<span class="sd">    from memo import memlist, grid, time_taken</span>
+
+<span class="sd">    data = []</span>
+
+
+<span class="sd">    @memlist(data=data)</span>
+<span class="sd">    @time_taken()</span>
+<span class="sd">    def birthday_experiment(class_size, n_sim):</span>
+<span class="sd">        sims = np.random.randint(1, 365 + 1, (n_sim, class_size))</span>
+<span class="sd">        sort_sims = np.sort(sims, axis=1)</span>
+<span class="sd">        n_uniq = (sort_sims[:, 1:] != sort_sims[:, :-1]).sum(axis = 1) + 1</span>
+<span class="sd">        proba = np.mean(n_uniq != class_size)</span>
+<span class="sd">        return {"est_proba": proba}</span>
+
+
+<span class="sd">    settings = grid(class_size=range(5, 50), n_sim=[100, 10_000, 1_000_000])</span>
+
+<span class="sd">    for setting in settings:</span>
+<span class="sd">        birthday_experiment(**setting)</span>
+<span class="sd">    ```</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">time_total</span> <span class="o">=</span> <span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span>
+            <span class="k">if</span> <span class="n">minutes</span><span class="p">:</span>
+                <span class="n">time_total</span> <span class="o">=</span> <span class="n">time_total</span> <span class="o">/</span> <span class="mi">60</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">result</span><span class="p">,</span> <span class="s2">"time_taken"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">time_total</span><span class="p">,</span> <span class="n">rounding</span><span class="p">)}</span>
+            <span class="k">return</span> <span class="n">result</span>
+
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+    <span class="k">return</span> <span class="n">decorator</span>
 </code></pre>
 </div>
 </details>
@@ -470,7 +713,7 @@ random_grid<span class="p">(</span><span class="n">n</span><span class="o">=</sp
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Base
+                Grab
               </div>
             </div>
           </a>
