@@ -22,14 +22,14 @@ def memwandb(project, **config):
 
     ```python
     import os
-    
+
     # You probably want to run with this setting to prevent a
     # whole lot of output suddenly appearing.
     os.environ["WANDB_SILENT"] = "true"
-    
+
     data = []
-    
-    
+
+
     @memwandb(project="birthday")
     @capture_time()
     def birthday_experiment(class_size, n_sim):
@@ -38,7 +38,7 @@ def memwandb(project, **config):
         n_uniq = (sort_sims[:, 1:] != sort_sims[:, :-1]).sum(axis = 1) + 1
         proba = np.mean(n_uniq != class_size)
         return {"est_proba": proba}
-    
+
     settings = grid(class_size=range(2, 40), n_sim=[1_000, 10_000, 100_000, 1_000_000])
     for setting in settings:
         birthday_experiment(**setting)
@@ -49,6 +49,7 @@ def memwandb(project, **config):
         @wraps(func)
         def wrapper(*args, **kwargs):
             import logging
+
             logger = logging.getLogger("wandb")
             logger.setLevel(logging.ERROR)
             wandb.init(project=project)

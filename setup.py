@@ -34,6 +34,6 @@ setup(
         "web": web_packages,
         "wandb": wandb_packages,
         "test": test_packages,
-        "dev": dev_packages
+        "dev": dev_packages,
     },
 )
