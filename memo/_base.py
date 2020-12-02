@@ -8,6 +8,33 @@ def memlist(data):
 
     Arguments:
         data: a list to push received data into
+
+    Example
+
+    ```python
+    from meme import memlist
+
+    data = []
+
+    @memlist(data=data)
+    def simulate(a, b):
+        return {"result": a + b}
+
+    # The `@memlist` decorator will allow the inputs/outputs to
+    # be saved in the provided `data` list.
+    for a in range(5):
+        for b in range(10):
+            simulate(a=a, b=b)
+
+    assert len(data) == 50
+
+    # If we keep running more loops the list will grow.
+    for a in range(6, 10 + 1):
+        for b in range(11, 20 + 1):
+            simulate(a=a, b=b)
+
+    assert len(data) == 100
+    ```
     """
 
     def decorator(func):
@@ -28,6 +55,22 @@ def memfile(filepath):
 
     Arguments:
         filepath: path to write data to
+
+    ```python
+    from meme import memfile
+
+    data = []
+
+    @memfile(data=data)
+    def simulate(a, b):
+        return {"result": a + b}
+
+    for a in range(5):
+        for b in range(10):
+            data.append(simulate(a=a, b=b)
+
+    assert len(data) == 50
+    ```
     """
 
     def decorator(func):
@@ -43,19 +86,35 @@ def memfile(filepath):
     return decorator
 
 
-def memstdout(print_fn=print):
+def memfunc(callback):
     """
     Remembers input/output of a function by printing.
 
     Arguments:
-        print_fn: option to overwrite the print_fn that is used, this allows you to attach a logger instead
+        callback: callback function that receives a dictionary with logged info
+
+    ```python
+    from meme import memfunc
+
+    data = []
+
+    @memfunc(callback=print)
+    def simulate(a, b):
+        return {"result": a + b}
+
+    for a in range(5):
+        for b in range(10):
+            data.append(simulate(a=a, b=b)
+
+    assert len(data) == 50
+    ```
     """
 
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
-            print_fn({**kwargs, **result})
+            callback({**kwargs, **result})
             return result
 
         return wrapper

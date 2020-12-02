@@ -1,19 +1,33 @@
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.4.0/styles/default.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.4.0/styles/agate.min.css">
 <script src="https://unpkg.com/@highlightjs/cdn-assets@10.4.0/highlight.min.js"></script>
 
+<style>
+    .hljs {
+        display: block;
+        overflow-x:auto;
+        padding-right: 17px;
+        padding-left: 17px;
+    }
+
+    pre{
+        font-family: Menlo,ui-monospace,SFMono-Regular,Monaco,Consolas,Liberation Mono,Courier New,monospace;
+    }
+
+    .hljs {
+    }
+</style>
 <div class="py-12 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="relative z-10 max-w-screen-lg xl:max-w-screen-xl mx-auto">
-      <h1 class="text-4xl sm:text-6xl lg:text-6xl leading-none font-extrabold tracking-tight text-gray-900 mt-10 mb-8 sm:mt-14 sm:mb-10">
-        <img class="w-12 inline-block" src="memo.svg"> <span class="transform translate-y-4 translate-x-0">memo</span>
+      <h1 class="text-4xl sm:text-6xl lg:text-4xl leading-none font-extrabold tracking-tight text-gray-900 mt-10 mb-8 sm:mt-14 sm:mb-10">
+        <img class="w-8 inline-block" src="memo.svg"> <span class="transform translate-y-4 translate-x-0">memo</span>
       </h1>
       <h1 class="text-4xl sm:text-6xl lg:text-7xl leading-none font-extrabold tracking-tight text-gray-900 mt-10 mb-8 sm:mt-14 sm:mb-10">
-        Decorators that make things <br>
-        "a whole log simpler".
+        "a whole log simpler" ... literally
       </h1>
     </div>
-    <br><br><br>
+    <br><br>
 
     <div class="mt-10">
       <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
@@ -33,13 +47,8 @@
 
         <div class="flex">
           <div class="ml-4">
-            <pre class="flex min-h-full text-xs md:text-sm">
-              <style>
-                code{
-                  Menlo,ui-monospace,SFMono-Regular,Monaco,Consolas,Liberation Mono,Courier New,monospace
-                }
-              </style>
-              <code>
+            <pre class="flex min-h-full text-xs md:text-sm text-lg">
+              <code class="rounded px-12">
 import numpy as np
 
 def birthday_experiment(class_size, n_sim=10_000):
@@ -105,9 +114,9 @@ results = [birthday_experiment(s) for s in range(2, 40)]
 
 
 <script>
-<!--  document.addEventListener('DOMContentLoaded', (event) => {-->
-<!--    document.querySelectorAll('pre code').forEach((block) => {-->
-<!--      hljs.highlightBlock(block);-->
-<!--    });-->
-<!--  });-->
+  document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('pre code').forEach((block) => {
+      hljs.highlightBlock(block);
+    });
+  });
 </script>

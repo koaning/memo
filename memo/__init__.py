@@ -1,12 +1,12 @@
 from ._error import NotInstalled
 from ._grid import grid, random_grid
-from ._base import memlist, memfile, memstdout
-from ._common import capture_time
+from ._base import memlist, memfile, memfunc
+from ._util import time_taken
 
 try:
     from memo._http import memweb
 except ModuleNotFoundError:
-    memweb = NotInstalled("memweb", "httpx")
+    memweb = NotInstalled("memweb", "web")
 
 try:
     from memo._wandb import memwandb
@@ -20,8 +20,8 @@ __all__ = [
     "random_grid",
     "memlist",
     "memfile",
-    "memstdout",
+    "memfunc",
     "memweb",
     "memwandb",
-    "capture_time"
+    "time_taken"
 ]

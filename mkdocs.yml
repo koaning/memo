@@ -1,0 +1,47 @@
+site_name: Memo Docs
+extra_css: [style.css]
+repo_url: https://github.com/koaning/memo
+site_url: https://koaning.github.io/memo/
+site_description: Makes things a whole log simpler.
+site_author: Vincent D. Warmerdam
+use_directory_urls: false
+nav:
+  - Home: index.md
+  - Guides:
+      - Getting Started: getting-started.md
+      - FAQ: faq.md
+  - API:
+      - Grab: api.md
+      - Utility: util.md
+plugins:
+  - mkdocstrings:
+      setup_commands:
+        - import memo
+      watch:
+        - memo
+  - search
+copyright: Copyright &copy; 2020 Maintained by <a href="https://twitter.com/fishnets88">Vincent</a>.
+theme:
+  name: material
+  icon:
+    logo: material/library
+  font:
+    text: Ubuntu
+    code: Ubuntu Mono
+  favicon: logo.png
+  logo: logo.png
+  feature:
+    tabs: true
+  palette:
+    primary: white
+    accent: teal
+markdown_extensions:
+  - admonition
+  - codehilite
+  - pymdownx.inlinehilite
+  - pymdownx.details
+  - pymdownx.tabbed
+  - pymdownx.highlight:
+      use_pygments: true
+  - toc:
+      permalink: true

@@ -1,8 +1,4 @@
-> **IMPORTANT** This repository is a work-in-progress.
-
-# memo
-
-Decorators that make things "a whole log simpler".
+![](docs/header.png)
 
 ## Installation 
 
@@ -10,101 +6,23 @@ Decorators that make things "a whole log simpler".
 pip install memo
 ```
 
+## Documentation
+
+The documentation can be found [here]().
+
 ## Usage
 
-Let's say you're running a simulation, or maybe a machine learning experiment. Then you 
-might have code that looks like this; 
+Here's an example of utility functions provided by our library. 
 
 ```python
 import numpy as np 
-
-def birthday_experiment(class_size, n_sim=10_000):
-    """Simulates the birthday paradox. Vectorized = Fast!"""
-    sims = np.random.randint(1, 365 + 1, (n_sim, class_size))
-    sort_sims = np.sort(sims, axis=1)
-    n_uniq = (sort_sims[:, 1:] != sort_sims[:, :-1]).sum(axis = 1) + 1
-    return np.mean(n_uniq != class_size)
-
-results = [birthday_experiment(s) for s in range(2, 40)]
-```
-
-This example sort of works, but how would we now go about plotting our results? If you want 
-to plot the effect of `class_size` and the simulated probability then it'd be do-able. But things
-get tricky if you're also interested in seeing the effect of `n_sim` as well. The input of the 
-simulation isn't nicely captured together with the output of the simulation. 
-
-The idea behind this library is that you can rewrite this function, only slightly, to make
-all of this data collection a whole log simpler. 
-
-```python
-import numpy as np 
-from memo import memlist
+from memo import memlist, memfile, grid, capture_time
 
 data = []
 
+@memfile(filepath="results.jsonl")
 @memlist(data=data)
-def birthday_experiment(class_size, n_sim):
-    """Simulates the birthday paradox. Vectorized = Fast!"""
-    sims = np.random.randint(1, 365 + 1, (n_sim, class_size))
-    sort_sims = np.sort(sims, axis=1)
-    n_uniq = (sort_sims[:, 1:] != sort_sims[:, :-1]).sum(axis = 1) + 1
-    return {"est_proba": np.mean(n_uniq != class_size)}
-
-for size in range(2, 40):
-    for n_sim in [1000, 10000, 100000]:
-        birthday_experiment(class_size=size, n_sim=n_sim)
-
-# `data` is now a list of dictionaries 
-# these have`n_sim`, `class_size` and `est_proba` as keys
-# can easily be turned into a dataframe via `pd.DataFrame(data)`
-```
-
-The `memlist` decorate takes care of all data collection. It captures all keyword
-arguments of the function as well as the dictionary output of the function. This 
-then is appended this to a list `data`. Especially when experiments become larger 
-this turned out to be a lovely pattern such that I didn't need to worry about logging 
-stats anymore. For example, suppose we also want to log how long the simulation takes;
-
-```python
-import time 
-import numpy as np 
-from memo import memlist
-
-data = []
-
-@memlist(data=data)
-def birthday_experiment(class_size, n_sim):
-    """Simulates the birthday paradox. Vectorized = Fast!"""
-    t1 = time.time()
-    sims = np.random.randint(1, 365 + 1, (n_sim, class_size))
-    sort_sims = np.sort(sims, axis=1)
-    n_uniq = (sort_sims[:, 1:] != sort_sims[:, :-1]).sum(axis = 1) + 1
-    proba = np.mean(n_uniq != class_size)
-    t2 = time.time()
-    return {"est_proba": proba, "time": t2 - t1}
-
-for size in range(2, 40):
-    for n_sim in [1000, 10000, 100000]:
-        birthday_experiment(class_size=size, n_sim=n_sim)
-```
-
-Note how little we need to change! 
-
-## Utilities
-
-We offer some utilities to make some of this easy though. In particular; 
-
-- We supply a grid generation mechanism to prevent a lot of for-loops. 
-- We supply a `@capture_time` so that you don't need to write that logic yourself.
-
-```python
-import numpy as np 
-from memo import memlist, grid, capture_time
-
-data = []
-
-@memlist(data=data)
-@capture_time(time_taken=True, time_start=True)
+@capture_time(time_taken=True)
 def birthday_experiment(class_size, n_sim):
     """Simulates the birthday paradox. Vectorized = Fast!"""
     sims = np.random.randint(1, 365 + 1, (n_sim, class_size))
@@ -113,28 +31,36 @@ def birthday_experiment(class_size, n_sim):
     proba = np.mean(n_uniq != class_size)
     return {"est_proba": proba}
 
-for settings in grid(class_size=range(2, 40), n_sim=[1000, 10000, 100000]):
+for settings in grid(class_size=[5, 10, 20, 30], n_sim=[1000, 1_000_000]):
     birthday_experiment(**settings)
 ```
 
-## Alternatives 
+The decorators `memlist` and `memfile` are making sure that the keyword arugments and 
+dictionary output of the `birthday_experiment` are logged. The contents of the `results.jsonl`-file
+and the `data` variable looks like this; 
+
+```python
+{"class_size": 5, "n_sim": 1000, "est_proba": 0.024, "time_taken": 0.0004899501800537109}
+{"class_size": 5, "n_sim": 1000000, "est_proba": 0.027178, "time_taken": 0.19407916069030762}
+{"class_size": 10, "n_sim": 1000, "est_proba": 0.104, "time_taken": 0.000598907470703125}
+{"class_size": 10, "n_sim": 1000000, "est_proba": 0.117062, "time_taken": 0.3751380443572998}
+{"class_size": 20, "n_sim": 1000, "est_proba": 0.415, "time_taken": 0.0009679794311523438}
+{"class_size": 20, "n_sim": 1000000, "est_proba": 0.411571, "time_taken": 0.7928380966186523}
+{"class_size": 30, "n_sim": 1000, "est_proba": 0.703, "time_taken": 0.0018239021301269531}
+{"class_size": 30, "n_sim": 1000000, "est_proba": 0.706033, "time_taken": 1.1375510692596436}
+```
+
+## Features 
 
 This library also offers decorators to pipe to other sources. 
 
+- `memlists` sends the json blobs to a list
 - `memfile` sends the json blobs to a file 
 - `memweb` sends the json blobs to a server via http-post requests
-- `memstdout` sends the data to stdout, or a callable that you define
+- `memfunc` sends the data to a callable that you supply, like `print`
 - `memwand` sends the json blobs to a [weights and biases](https://wandb.ai/) endpoint
+- `grid` generates a convenient grid for your experiments
+- `random_grid` generates a randomized grid for your experiments
 
 The nice thing about being able to log results to a file or to the web is that 
-you can also more easily parallize your jobs. 
-
-## Utilities 
-
-This library also offers some extra utilities to make it easy to collect logs from these sorts
-of grids. 
-
-- `grid`: generates a grid on your behalf 
-- `random_grid`: generates a random grid on your behalf 
-- `ignore_error`: allows underlying function to ignore errors
-- `timeit`: also captures the time taken
+you can also more easily parallize your jobs too!
