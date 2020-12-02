@@ -450,7 +450,9 @@ grid<span class="p">(</span><span class="o">**</span><span class="n">kwargs</spa
 </table>
 <p>Example</p>
 <div class="codehilite">
-<pre><span></span><code><span class="n">settings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">b</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+<pre><span></span><code><span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">grid</span>
+
+<span class="n">settings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">b</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
 <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span>
      <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
      <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
@@ -479,6 +481,8 @@ grid<span class="p">(</span><span class="o">**</span><span class="n">kwargs</spa
 <span class="sd">    Example</span>
 
 <span class="sd">    ```python</span>
+<span class="sd">    from memo import grid</span>
+
 <span class="sd">    settings = list(grid(a=[1,2], b=[1, 2]))</span>
 <span class="sd">    expected = [</span>
 <span class="sd">         {'a': 1, 'b': 1},</span>
@@ -535,7 +539,9 @@ random_grid<span class="p">(</span><span class="n">n</span><span class="o">=</sp
 </table>
 <p>Example</p>
 <div class="codehilite">
-<pre><span></span><code><span class="n">settings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">random_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">b</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+<pre><span></span><code><span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">random_grid</span>
+
+<span class="n">settings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">random_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">b</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span> <span class="o">==</span> <span class="mi">30</span>
 </code></pre>
 </div>
@@ -552,6 +558,8 @@ random_grid<span class="p">(</span><span class="n">n</span><span class="o">=</sp
 <span class="sd">    Example</span>
 
 <span class="sd">    ```python</span>
+<span class="sd">    from memo import random_grid</span>
+
 <span class="sd">    settings = list(random_grid(n=30, a=[1,2], b=[1, 2]))</span>
 <span class="sd">    assert len(settings) == 30</span>
 <span class="sd">    ```</span>

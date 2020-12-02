@@ -558,13 +558,13 @@ a list. You can just as easily write to a file too! </p>
 <li>We supply a <code>@capture_time</code> so that you don't need to write that logic yourself.</li>
 </ul>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
-<span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">memlist</span><span class="p">,</span> <span class="n">memfile</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">capture_time</span>
+<span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">memlist</span><span class="p">,</span> <span class="n">memfile</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">time_taken</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="nd">@memfile</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;results.json&quot;</span><span class="p">)</span>
 <span class="nd">@memlist</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-<span class="nd">@capture_time</span><span class="p">(</span><span class="n">time_taken</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nd">@time_taken</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">birthday_experiment</span><span class="p">(</span><span class="n">class_size</span><span class="p">,</span> <span class="n">n_sim</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Simulates the birthday paradox. Vectorized = Fast!&quot;&quot;&quot;</span>
     <span class="n">sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">365</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">n_sim</span><span class="p">,</span> <span class="n">class_size</span><span class="p">))</span>
@@ -582,14 +582,18 @@ a list. You can just as easily write to a file too! </p>
 that these decorators make it more fun to actually log the results of experiments.
 It's nice to be able to just add a decorator to a function and not have to 
 worry about logging the statistics.</p>
-<p>The library also offers extra features to make things a whole <em>log</em> simpler. </p>
+<p>The library also offers extra features to make things a whole <em>log</em> simpler.  </p>
 <ul>
-<li><code>@memfunc</code> allows you to attach a callback, like <code>print</code></li>
-<li><code>@memweb</code> allows you to post the data via http to a webserver </li>
-<li><code>@memwand</code> allows you to post results to <a href="https://wandb.ai/">weights and biases</a>.</li>
+<li><code>memlists</code> sends the json blobs to a list</li>
+<li><code>memfile</code> sends the json blobs to a file </li>
+<li><code>memweb</code> sends the json blobs to a server via http-post requests</li>
+<li><code>memfunc</code> sends the data to a callable that you supply, like <code>print</code></li>
+<li><code>memwand</code> sends the json blobs to a <a href="https://wandb.ai/">weights and biases</a> endpoint</li>
 <li><code>grid</code> generates a convenient grid for your experiments</li>
 <li><code>random_grid</code> generates a randomized grid for your experiments</li>
+<li><code>time_taken</code> also logs the time the function takes to run</li>
 </ul>
+<p>Check out the <a href="">API docs</a> to explore these in more detail.</p>
                 
               
               

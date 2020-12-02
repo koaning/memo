@@ -478,7 +478,7 @@ memlist<span class="p">(</span><span class="n">data</span><span class="p">)</spa
 </table>
 <p>Example</p>
 <div class="codehilite">
-<pre><span></span><code><span class="kn">from</span> <span class="nn">meme</span> <span class="kn">import</span> <span class="n">memlist</span>
+<pre><span></span><code><span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">memlist</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -515,7 +515,7 @@ memlist<span class="p">(</span><span class="n">data</span><span class="p">)</spa
 <span class="sd">    Example</span>
 
 <span class="sd">    ```python</span>
-<span class="sd">    from meme import memlist</span>
+<span class="sd">    from memo import memlist</span>
 
 <span class="sd">    data = []</span>
 
@@ -587,19 +587,15 @@ memfile<span class="p">(</span><span class="n">filepath</span><span class="p">)<
 </tbody>
 </table>
 <div class="codehilite">
-<pre><span></span><code><span class="kn">from</span> <span class="nn">meme</span> <span class="kn">import</span> <span class="n">memfile</span>
+<pre><span></span><code><span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">memfile</span>
 
-<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="nd">@memfile</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<span class="nd">@memfile</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="s2">"tmpfile.jsonl"</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">{</span><span class="s2">"result"</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">}</span>
 
 <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">simulate</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
-
-<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">50</span>
+        <span class="n">simulate</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
 </code></pre>
 </div>
 <details class="quote">
@@ -613,19 +609,15 @@ memfile<span class="p">(</span><span class="n">filepath</span><span class="p">)<
 <span class="sd">        filepath: path to write data to</span>
 
 <span class="sd">    ```python</span>
-<span class="sd">    from meme import memfile</span>
+<span class="sd">    from memo import memfile</span>
 
-<span class="sd">    data = []</span>
-
-<span class="sd">    @memfile(data=data)</span>
+<span class="sd">    @memfile(filepath="tmpfile.jsonl")</span>
 <span class="sd">    def simulate(a, b):</span>
 <span class="sd">        return {"result": a + b}</span>
 
 <span class="sd">    for a in range(5):</span>
 <span class="sd">        for b in range(10):</span>
-<span class="sd">            data.append(simulate(a=a, b=b)</span>
-
-<span class="sd">    assert len(data) == 50</span>
+<span class="sd">            simulate(a=a, b=b)</span>
 <span class="sd">    ```</span>
 <span class="sd">    """</span>
 
@@ -677,18 +669,20 @@ memfunc<span class="p">(</span><span class="n">callback</span><span class="p">)<
 </tbody>
 </table>
 <div class="codehilite">
-<pre><span></span><code><span class="kn">from</span> <span class="nn">meme</span> <span class="kn">import</span> <span class="n">memfunc</span>
+<pre><span></span><code><span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">memfunc</span><span class="p">,</span> <span class="n">memlist</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
 
+<span class="nd">@memlist</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
 <span class="nd">@memfunc</span><span class="p">(</span><span class="n">callback</span><span class="o">=</span><span class="nb">print</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">{</span><span class="s2">"result"</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">}</span>
 
 <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">simulate</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">simulate</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
 
+<span class="c1"># You should now see print statements, and this holds:</span>
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">50</span>
 </code></pre>
 </div>
@@ -703,18 +697,20 @@ memfunc<span class="p">(</span><span class="n">callback</span><span class="p">)<
 <span class="sd">        callback: callback function that receives a dictionary with logged info</span>
 
 <span class="sd">    ```python</span>
-<span class="sd">    from meme import memfunc</span>
+<span class="sd">    from memo import memfunc, memlist</span>
 
 <span class="sd">    data = []</span>
 
+<span class="sd">    @memlist(data=data)</span>
 <span class="sd">    @memfunc(callback=print)</span>
 <span class="sd">    def simulate(a, b):</span>
 <span class="sd">        return {"result": a + b}</span>
 
 <span class="sd">    for a in range(5):</span>
 <span class="sd">        for b in range(10):</span>
-<span class="sd">            data.append(simulate(a=a, b=b)</span>
+<span class="sd">            simulate(a=a, b=b)</span>
 
+<span class="sd">    # You should now see print statements, and this holds:</span>
 <span class="sd">    assert len(data) == 50</span>
 <span class="sd">    ```</span>
 <span class="sd">    """</span>
@@ -839,6 +835,7 @@ memwandb<span class="p">(</span><span class="n">project</span><span class="p">,<
 <p>Usage:</p>
 <div class="codehilite">
 <pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">wemwandb</span><span class="p">,</span> <span class="n">time_taken</span>
 
 <span class="c1"># You probably want to run with this setting to prevent a</span>
 <span class="c1"># whole lot of output suddenly appearing.</span>
@@ -848,7 +845,7 @@ memwandb<span class="p">(</span><span class="n">project</span><span class="p">,<
 
 
 <span class="nd">@memwandb</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="s2">"birthday"</span><span class="p">)</span>
-<span class="nd">@capture_time</span><span class="p">()</span>
+<span class="nd">@time_taken</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">birthday_experiment</span><span class="p">(</span><span class="n">class_size</span><span class="p">,</span> <span class="n">n_sim</span><span class="p">):</span>
     <span class="n">sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">365</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">n_sim</span><span class="p">,</span> <span class="n">class_size</span><span class="p">))</span>
     <span class="n">sort_sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">sims</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -883,6 +880,7 @@ memwandb<span class="p">(</span><span class="n">project</span><span class="p">,<
 
 <span class="sd">    ```python</span>
 <span class="sd">    import os</span>
+<span class="sd">    from memo import wemwandb, time_taken</span>
 
 <span class="sd">    # You probably want to run with this setting to prevent a</span>
 <span class="sd">    # whole lot of output suddenly appearing.</span>
@@ -892,7 +890,7 @@ memwandb<span class="p">(</span><span class="n">project</span><span class="p">,<
 
 
 <span class="sd">    @memwandb(project="birthday")</span>
-<span class="sd">    @capture_time()</span>
+<span class="sd">    @time_taken()</span>
 <span class="sd">    def birthday_experiment(class_size, n_sim):</span>
 <span class="sd">        sims = np.random.randint(1, 365 + 1, (n_sim, class_size))</span>
 <span class="sd">        sort_sims = np.sort(sims, axis=1)</span>

@@ -412,12 +412,12 @@
 
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <p>You can install this package via pip;</p>
-<div class="codehilite"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="n">memo</span>
+<div class="codehilite"><pre><span></span><code><span class="err">pip install memo</span>
 </code></pre></div>
 
 <p>You might want to install extra dependencies depending on your use-case. </p>
-<div class="codehilite"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;memo[web]&quot;</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;memo[wandb]&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="n">pip</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="ss">&quot;memo[web]&quot;</span><span class="w"></span>
+<span class="n">pip</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="ss">&quot;memo[wandb]&quot;</span><span class="w"></span>
 </code></pre></div>
 
 <h2 id="what-does-this-package-do">What does this package do?<a class="headerlink" href="#what-does-this-package-do" title="Permanent link">&para;</a></h2>
@@ -454,8 +454,6 @@ outputs of a function are logged. To see how it works in more detail, check the 
 <li><code>random_grid</code> generates a randomized grid for your experiments</li>
 <li><code>time_taken</code> also logs the time the function takes to run</li>
 </ul>
-<p>The nice thing about being able to log results to a file or to the web is that 
-you can also more easily parallize your jobs too!</p>
                 
               
               
