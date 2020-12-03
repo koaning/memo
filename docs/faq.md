@@ -72,3 +72,30 @@ settings = list(grid(class_size=[10, 20, 30], n_sim=[100, 10_000, 1_000_000]))
 for setting in tqdm.tqdm(settings):
     birthday_experiment(**setting)
 ```
+
+## Can I get amazing visualisations? 
+
+Sure, but they won't be supplied by this package. Instead we might
+recommend checking out [hiplot](https://github.com/facebookresearch/hiplot).
+It gives a pretty parallel coordinates from jupyter notebook.
+
+If you've got a list with dictionaries you can run;
+
+```
+import hiplot as hip
+data = [{'dropout':0.1, 'lr': 0.001, 'loss': 10.0, 'optimizer': 'SGD'},
+        {'dropout':0.15, 'lr': 0.01, 'loss': 3.5, 'optimizer': 'Adam'},
+        {'dropout':0.3, 'lr': 0.1, 'loss': 4.5, 'optimizer': 'Adam'}]
+hip.Experiment.from_iterable(data).display()
+```
+
+You can read in a file locally as well. 
+
+```
+import pandas as pd
+import hiplot as hip
+df = pd.read_json("arabic-sentences.jsonl", lines=True)
+data = df.to_dict(orient='records')
+
+hip.Experiment.from_iterable(data).display()
+```
