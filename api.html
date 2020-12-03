@@ -339,8 +339,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#memo._wandb.memwandb" class="md-nav__link">
-    memwandb()
+  <a href="#memo._error.memwandb" class="md-nav__link">
+    memwandb
   </a>
   
 </li>
@@ -421,8 +421,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#memo._wandb.memwandb" class="md-nav__link">
-    memwandb()
+  <a href="#memo._error.memwandb" class="md-nav__link">
+    memwandb
   </a>
   
 </li>
@@ -788,142 +788,16 @@ memweb<span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </details>
 </div>
 </div>
-<div class="doc doc-object doc-function">
-<h2 class="doc doc-heading" id="memo._wandb.memwandb">
+<div class="doc doc-object doc-attribute">
+<h2 class="doc doc-heading" id="memo._error.memwandb">
 
-        <code class="highlight language-python">
-memwandb<span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">)</span>        </code>
+        <code class="highlight">
+memwandb: <span class="kc">None</span>        </code>
 
 
-      <a class="headerlink" href="#memo._wandb.memwandb" title="Permanent link">&para;</a></h2>
+      <a class="headerlink" href="#memo._error.memwandb" title="Permanent link">&para;</a></h2>
 <div class="doc doc-contents first">
-<p>Remembers input/output of a function by sending it to wandb.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>To use this tool, you may need to install extra dependencies.</p>
-<p><code>pip install memo[wandb]</code></p>
-</div>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>project</code></td>
-<td><code></code></td>
-<td>
-<p>name of the wandb project you want to send to</p>
-</td>
-<td><em>required</em></td>
-</tr>
-<tr>
-<td><code>config</code></td>
-<td><code></code></td>
-<td>
-<p>optional extra keyword arguments to send along</p>
-</td>
-<td><code>{}</code></td>
-</tr>
-</tbody>
-</table>
-<p>Usage:</p>
-<div class="codehilite">
-<pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">wemwandb</span><span class="p">,</span> <span class="n">time_taken</span>
-
-<span class="c1"># You probably want to run with this setting to prevent a</span>
-<span class="c1"># whole lot of output suddenly appearing.</span>
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"WANDB_SILENT"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"true"</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-
-
-<span class="nd">@memwandb</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="s2">"birthday"</span><span class="p">)</span>
-<span class="nd">@time_taken</span><span class="p">()</span>
-<span class="k">def</span> <span class="nf">birthday_experiment</span><span class="p">(</span><span class="n">class_size</span><span class="p">,</span> <span class="n">n_sim</span><span class="p">):</span>
-    <span class="n">sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">365</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">n_sim</span><span class="p">,</span> <span class="n">class_size</span><span class="p">))</span>
-    <span class="n">sort_sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">sims</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">n_uniq</span> <span class="o">=</span> <span class="p">(</span><span class="n">sort_sims</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">!=</span> <span class="n">sort_sims</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="n">proba</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">n_uniq</span> <span class="o">!=</span> <span class="n">class_size</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s2">"est_proba"</span><span class="p">:</span> <span class="n">proba</span><span class="p">}</span>
-
-<span class="n">settings</span> <span class="o">=</span> <span class="n">grid</span><span class="p">(</span><span class="n">class_size</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span> <span class="n">n_sim</span><span class="o">=</span><span class="p">[</span><span class="mi">1_000</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">,</span> <span class="mi">1_000_000</span><span class="p">])</span>
-<span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">:</span>
-    <span class="n">birthday_experiment</span><span class="p">(</span><span class="o">**</span><span class="n">setting</span><span class="p">)</span>
-</code></pre>
-</div>
-<details class="quote">
-          <summary>Source code in <code>memo/_wandb.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">memwandb</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">):</span>
-    <span class="sd">"""</span>
-<span class="sd">    Remembers input/output of a function by sending it to wandb.</span>
-
-<span class="sd">    Warning:</span>
-<span class="sd">        To use this tool, you may need to install extra dependencies.</span>
-
-<span class="sd">        ```</span>
-<span class="sd">        pip install memo[wandb]</span>
-<span class="sd">        ```</span>
-
-<span class="sd">    Arguments:</span>
-<span class="sd">        project: name of the wandb project you want to send to</span>
-<span class="sd">        config: optional extra keyword arguments to send along</span>
-
-<span class="sd">    Usage:</span>
-
-<span class="sd">    ```python</span>
-<span class="sd">    import os</span>
-<span class="sd">    from memo import wemwandb, time_taken</span>
-
-<span class="sd">    # You probably want to run with this setting to prevent a</span>
-<span class="sd">    # whole lot of output suddenly appearing.</span>
-<span class="sd">    os.environ["WANDB_SILENT"] = "true"</span>
-
-<span class="sd">    data = []</span>
-
-
-<span class="sd">    @memwandb(project="birthday")</span>
-<span class="sd">    @time_taken()</span>
-<span class="sd">    def birthday_experiment(class_size, n_sim):</span>
-<span class="sd">        sims = np.random.randint(1, 365 + 1, (n_sim, class_size))</span>
-<span class="sd">        sort_sims = np.sort(sims, axis=1)</span>
-<span class="sd">        n_uniq = (sort_sims[:, 1:] != sort_sims[:, :-1]).sum(axis = 1) + 1</span>
-<span class="sd">        proba = np.mean(n_uniq != class_size)</span>
-<span class="sd">        return {"est_proba": proba}</span>
-
-<span class="sd">    settings = grid(class_size=range(2, 40), n_sim=[1_000, 10_000, 100_000, 1_000_000])</span>
-<span class="sd">    for setting in settings:</span>
-<span class="sd">        birthday_experiment(**setting)</span>
-<span class="sd">    ```</span>
-<span class="sd">    """</span>
-
-    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="kn">import</span> <span class="nn">logging</span>
-
-            <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">"wandb"</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
-            <span class="n">wandb</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">)</span>
-            <span class="n">wandb</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span><span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="o">**</span><span class="n">result</span><span class="p">})</span>
-            <span class="k">return</span> <span class="n">result</span>
-
-        <span class="k">return</span> <span class="n">wrapper</span>
-
-    <span class="k">return</span> <span class="n">decorator</span>
-</code></pre>
-</div>
-</details>
-</div>
+    </div>
 </div>
                 
               

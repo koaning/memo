@@ -417,7 +417,6 @@
 
 <p>You might want to install extra dependencies depending on your use-case. </p>
 <div class="codehilite"><pre><span></span><code><span class="n">pip</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="ss">&quot;memo[web]&quot;</span><span class="w"></span>
-<span class="n">pip</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="ss">&quot;memo[wandb]&quot;</span><span class="w"></span>
 </code></pre></div>
 
 <h2 id="what-does-this-package-do">What does this package do?<a class="headerlink" href="#what-does-this-package-do" title="Permanent link">&para;</a></h2>
@@ -441,7 +440,8 @@ results from simulations or machine learning experiments.</p>
 </code></pre></div>
 
 <p>The decorator ensures that all the keyword arguments and dictionary 
-outputs of a function are logged. To see how it works in more detail, check the <a href="/getting-started.html">quickstart</a></p>
+outputs of a function are logged. To see how it works in more detail, 
+check the <a href="/getting-started.html">quickstart</a></p>
 <h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
 <p>This library also offers decorators to pipe to other sources. </p>
 <ul>
@@ -449,7 +449,6 @@ outputs of a function are logged. To see how it works in more detail, check the 
 <li><code>memfile</code> sends the json blobs to a file </li>
 <li><code>memweb</code> sends the json blobs to a server via http-post requests</li>
 <li><code>memfunc</code> sends the data to a callable that you supply, like <code>print</code></li>
-<li><code>memwand</code> sends the json blobs to a <a href="https://wandb.ai/">weights and biases</a> endpoint</li>
 <li><code>grid</code> generates a convenient grid for your experiments</li>
 <li><code>random_grid</code> generates a randomized grid for your experiments</li>
 <li><code>time_taken</code> also logs the time the function takes to run</li>
