@@ -1,5 +1,5 @@
 black:
-	black memo tests setup.py --check
+	black memo tests setup.py
 
 flake:
 	flake8 memo tests setup.py

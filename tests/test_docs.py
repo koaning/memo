@@ -9,7 +9,7 @@ files = [str(p) for p in pathlib.Path("docs").glob("*.md")] + ["README.md"]
 functions = [memlist, memfunc, memfile, time_taken, grid, random_grid]
 
 
-@pytest.mark.parametrize('fpath', files)
+@pytest.mark.parametrize("fpath", files)
 def test_files_good(fpath):
     check_md_file(fpath=fpath)
 
