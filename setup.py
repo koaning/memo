@@ -1,14 +1,13 @@
 from memo import __version__
 from setuptools import setup, find_packages
 
-base_packages = []
+base_packages = ["rich>=9.2.0",]
 
 test_packages = [
     "flake8>=3.6.0",
     "pytest>=4.0.2",
     "numpy>=1.19.4",
     "mktestdocs>=0.1.0",
-    "rich>=9.2.0",
     "tqdm>=4.54.0",
 ]
 
