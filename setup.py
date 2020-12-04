@@ -24,7 +24,7 @@ docs_packages = [
 
 dev_packages = util_packages + docs_packages + test_packages
 
-web_packages = ["httpx>=0.16.1"]
+web_packages = ["httpx>=0.16.1"] + base_packages
 
 setup(
     name="memo",
