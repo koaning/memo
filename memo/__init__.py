@@ -8,13 +8,7 @@ try:
 except ModuleNotFoundError:
     memweb = NotInstalled("memweb", "web")
 
-try:
-    from memo._wandb import memwandb
-except ModuleNotFoundError:
-    memwandb = NotInstalled("memwandb", "wandb")
 
-
-__version__ = "0.1.1"
 __all__ = [
     "grid",
     "random_grid",
@@ -22,6 +16,5 @@ __all__ = [
     "memfile",
     "memfunc",
     "memweb",
-    "memwandb",
     "time_taken",
 ]

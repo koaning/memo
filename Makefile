@@ -1,5 +1,5 @@
 black:
-	black memo tests setup.py --check
+	black memo tests setup.py
 
 flake:
 	flake8 memo tests setup.py
@@ -24,3 +24,6 @@ pypi:
 	python setup.py sdist
 	python setup.py bdist_wheel --universal
 	twine upload dist/*
+
+clean:
+	rm *.jsonl *.json

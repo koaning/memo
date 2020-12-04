@@ -1,9 +1,14 @@
-from memo import __version__
 from setuptools import setup, find_packages
 
-base_packages = []
+base_packages = ["rich>=9.2.0", "orjson>=3.4.5"]
 
-test_packages = ["flake8>=3.6.0", "pytest>=4.0.2", "numpy>=1.19.4", "exdown>=0.7.1", "rich>=9.2.0", "tqdm>=4.54.0"]
+test_packages = [
+    "flake8>=3.6.0",
+    "pytest>=4.0.2",
+    "numpy>=1.19.4",
+    "mktestdocs>=0.1.0",
+    "tqdm>=4.54.0",
+] + base_packages
 
 util_packages = [
     "jupyter>=1.0.0",
@@ -18,11 +23,11 @@ docs_packages = [
 
 dev_packages = util_packages + docs_packages + test_packages
 
-web_packages = ["httpx>=0.16.1"]
+web_packages = ["httpx>=0.16.1"] + base_packages
 
 setup(
     name="memo",
-    version=__version__,
+    version="0.1.2",
     packages=find_packages(exclude=["notebooks"]),
     install_requires=base_packages,
     extras_require={
