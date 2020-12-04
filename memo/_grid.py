@@ -1,8 +1,10 @@
 import random
 import itertools as it
 
+from rich.progress import track
 
-def grid(**kwargs):
+
+def grid(progbar=True, **kwargs):
     """
     Generates a grid of settings.
 
@@ -30,11 +32,16 @@ def grid(**kwargs):
         print(calc_sum(**setting))
     ```
     """
-    for c in it.product(*[v for v in kwargs.values()]):
-        yield {k: v for k, v in zip(kwargs.keys(), c)}
+    settings = list(it.product(*[v for v in kwargs.values()]))
+    if progbar:
+        for s in track(settings, description="Grid..."):
+            yield {k: v for k, v in zip(kwargs.keys(), s)}
+    else:
+        for s in settings:
+            yield {k: v for k, v in zip(kwargs.keys(), s)}
 
 
-def random_grid(n=30, **kwargs):
+def random_grid(progbar=True, n=30, **kwargs):
     """
     Generates a random grid settings.
 
@@ -50,5 +57,10 @@ def random_grid(n=30, **kwargs):
     assert len(settings) == 30
     ```
     """
-    for i in range(n):
-        yield {k: random.choice(v) for k, v in kwargs.items()}
+
+    if progbar:
+        for _ in track(range(n), description="Random Grid..."):
+            yield {k: random.choice(v) for k, v in kwargs.items()}
+    else:
+        for _ in range(n):
+            yield {k: random.choice(v) for k, v in kwargs.items()}
