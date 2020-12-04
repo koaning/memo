@@ -12,7 +12,7 @@ def birthday_experiment(class_size, n_sim):
     """Simulates the birthday paradox. Vectorized = Fast!"""
     sims = np.random.randint(1, 365 + 1, (n_sim, class_size))
     sort_sims = np.sort(sims, axis=1)
-    n_uniq = (sort_sims[:, 1:] != sort_sims[:, :-1]).sum(axis = 1) + 1
+    n_uniq = (sort_sims[:, 1:] != sort_sims[:, :-1]).sum(axis=1) + 1
     proba = np.mean(n_uniq != class_size)
     return {"est_proba": proba}
 
