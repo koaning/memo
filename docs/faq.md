@@ -94,7 +94,7 @@ You can read in a file locally as well.
 ```
 import pandas as pd
 import hiplot as hip
-df = pd.read_json("arabic-sentences.jsonl", lines=True)
+df = pd.read_json("collected-data.jsonl", lines=True)
 data = df.to_dict(orient='records')
 
 hip.Experiment.from_iterable(data).display()
