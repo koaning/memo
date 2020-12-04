@@ -9,7 +9,7 @@ test_packages = [
     "numpy>=1.19.4",
     "mktestdocs>=0.1.0",
     "tqdm>=4.54.0",
-]
+] + base_packages
 
 util_packages = [
     "jupyter>=1.0.0",
