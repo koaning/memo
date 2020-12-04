@@ -1,4 +1,3 @@
-from memo._version import __version__
 from setuptools import setup, find_packages
 
 base_packages = ["rich>=9.2.0", "orjson>=3.4.5"]
@@ -28,7 +27,7 @@ web_packages = ["httpx>=0.16.1"] + base_packages
 
 setup(
     name="memo",
-    version=__version__,
+    version="0.1.2",
     packages=find_packages(exclude=["notebooks"]),
     install_requires=base_packages,
     extras_require={
