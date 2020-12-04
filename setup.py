@@ -18,8 +18,6 @@ docs_packages = [
 
 dev_packages = util_packages + docs_packages + test_packages
 
-wandb_packages = ["wandb>=0.10.11"]
-
 web_packages = ["httpx>=0.16.1"]
 
 setup(
@@ -29,7 +27,6 @@ setup(
     install_requires=base_packages,
     extras_require={
         "web": web_packages,
-        "wandb": wandb_packages,
         "test": test_packages,
         "dev": dev_packages,
     },
