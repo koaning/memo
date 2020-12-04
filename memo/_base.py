@@ -74,7 +74,10 @@ def memfile(filepath):
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
             with open(filepath, "a") as f:
-                ser = orjson.dumps({**kwargs, **result},  option=orjson.OPT_NAIVE_UTC | orjson.OPT_SERIALIZE_NUMPY)
+                ser = orjson.dumps(
+                    {**kwargs, **result},
+                    option=orjson.OPT_NAIVE_UTC | orjson.OPT_SERIALIZE_NUMPY,
+                )
                 f.write(ser.decode("utf-8") + "\n")
             return result
 
