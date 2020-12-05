@@ -34,7 +34,7 @@ for setting in grid(class_size=range(20, 30), n_sim=[100, 10_000, 1_000_000]):
     birthday_experiment(**setting)
 ```
 
-Note that you can turn the grid off via `grid(progbar=False, ...)`.
+Note that you can turn the progress bar off via `grid(progbar=False, ...)`.
 
 ## Can I get amazing visualisations? 
 
