@@ -151,7 +151,6 @@ The library also offers extra features to make things a whole *log* simpler.
 - `memfile` sends the json blobs to a file 
 - `memweb` sends the json blobs to a server via http-post requests
 - `memfunc` sends the data to a callable that you supply, like `print`
-- `memwand` sends the json blobs to a [weights and biases](https://wandb.ai/) endpoint
 - `grid` generates a convenient grid for your experiments
 - `random_grid` generates a randomized grid for your experiments
 - `time_taken` also logs the time the function takes to run
