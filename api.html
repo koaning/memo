@@ -331,20 +331,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#memo._http.memweb" class="md-nav__link">
-    memweb()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#memo._error.memwandb" class="md-nav__link">
-    memwandb
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -409,20 +395,6 @@
         <li class="md-nav__item">
   <a href="#memo._base.memfunc" class="md-nav__link">
     memfunc()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#memo._http.memweb" class="md-nav__link">
-    memweb()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#memo._error.memwandb" class="md-nav__link">
-    memwandb
   </a>
   
 </li>
@@ -626,7 +598,11 @@ memfile<span class="p">(</span><span class="n">filepath</span><span class="p">)<
         <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="o">**</span><span class="n">result</span><span class="p">})</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">ser</span> <span class="o">=</span> <span class="n">orjson</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+                    <span class="p">{</span><span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="o">**</span><span class="n">result</span><span class="p">},</span>
+                    <span class="n">option</span><span class="o">=</span><span class="n">orjson</span><span class="o">.</span><span class="n">OPT_NAIVE_UTC</span> <span class="o">|</span> <span class="n">orjson</span><span class="o">.</span><span class="n">OPT_SERIALIZE_NUMPY</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">ser</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">result</span>
 
         <span class="k">return</span> <span class="n">wrapper</span>
@@ -729,75 +705,6 @@ memfunc<span class="p">(</span><span class="n">callback</span><span class="p">)<
 </div>
 </details>
 </div>
-</div>
-<div class="doc doc-object doc-function">
-<h2 class="doc doc-heading" id="memo._http.memweb">
-
-        <code class="highlight language-python">
-memweb<span class="p">(</span><span class="n">url</span><span class="p">)</span>        </code>
-
-
-      <a class="headerlink" href="#memo._http.memweb" title="Permanent link">&para;</a></h2>
-<div class="doc doc-contents first">
-<p>Remembers input/output of a function by sending it over http to an endpoint.</p>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>filepath</code></td>
-<td><code></code></td>
-<td>
-<p>path to write data to</p>
-</td>
-<td><em>required</em></td>
-</tr>
-</tbody>
-</table>
-<details class="quote">
-          <summary>Source code in <code>memo/_http.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">memweb</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
-    <span class="sd">"""</span>
-<span class="sd">    Remembers input/output of a function by sending it over http to an endpoint.</span>
-
-<span class="sd">    Arguments:</span>
-<span class="sd">        filepath: path to write data to</span>
-<span class="sd">    """</span>
-
-    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
-                <span class="n">_</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="o">**</span><span class="n">result</span><span class="p">})</span>
-            <span class="k">return</span> <span class="n">result</span>
-
-        <span class="k">return</span> <span class="n">wrapper</span>
-
-    <span class="k">return</span> <span class="n">decorator</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-attribute">
-<h2 class="doc doc-heading" id="memo._error.memwandb">
-
-        <code class="highlight">
-memwandb: <span class="kc">None</span>        </code>
-
-
-      <a class="headerlink" href="#memo._error.memwandb" title="Permanent link">&para;</a></h2>
-<div class="doc doc-contents first">
-    </div>
 </div>
                 
               

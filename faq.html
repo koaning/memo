@@ -285,15 +285,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#rich-demo" class="md-nav__link">
-    Rich Demo
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tqdm-demo" class="md-nav__link">
-    Tqdm Demo
+  <a href="#demo" class="md-nav__link">
+    Demo
   </a>
   
 </li>
@@ -408,15 +401,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#rich-demo" class="md-nav__link">
-    Rich Demo
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tqdm-demo" class="md-nav__link">
-    Tqdm Demo
+  <a href="#demo" class="md-nav__link">
+    Demo
   </a>
   
 </li>
@@ -457,12 +443,9 @@
 You'll usually want to have a name attached to column names in 
 a dataframe and functions can have multiple outputs.  </p>
 <h2 id="can-i-add-a-progress-bar">Can I add a progress bar?<a class="headerlink" href="#can-i-add-a-progress-bar" title="Permanent link">&para;</a></h2>
-<p>We don't offer a progress bar natively in this library, but nothing is stopping you
-from using <a href="https://github.com/willmcgugan/rich">rich</a> or 
-<a href="https://github.com/tqdm/tqdm">tqdm</a> for this. </p>
-<h3 id="rich-demo">Rich Demo<a class="headerlink" href="#rich-demo" title="Permanent link">&para;</a></h3>
+<p>You get a progress bar when you're using our internal <code>grid</code> method.</p>
+<h3 id="demo">Demo<a class="headerlink" href="#demo" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">rich.progress</span> <span class="kn">import</span> <span class="n">Progress</span>
 
 <span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">memlist</span><span class="p">,</span> <span class="n">memfile</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">time_taken</span>
 
@@ -481,44 +464,11 @@ from using <a href="https://github.com/willmcgugan/rich">rich</a> or
     <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;est_proba&quot;</span><span class="p">:</span> <span class="n">proba</span><span class="p">}</span>
 
 
-<span class="n">settings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">grid</span><span class="p">(</span><span class="n">class_size</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span> <span class="n">n_sim</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">,</span> <span class="mi">1_000_000</span><span class="p">]))</span>
-
-
-<span class="k">with</span> <span class="n">Progress</span><span class="p">()</span> <span class="k">as</span> <span class="n">progress</span><span class="p">:</span>
-    <span class="n">task</span> <span class="o">=</span> <span class="n">progress</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="s2">&quot;[green]Processing...&quot;</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">settings</span><span class="p">))</span>
-
-    <span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">:</span>
-        <span class="n">birthday_experiment</span><span class="p">(</span><span class="o">**</span><span class="n">setting</span><span class="p">)</span>
-        <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">advance</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</code></pre></div>
-
-<h3 id="tqdm-demo">Tqdm Demo<a class="headerlink" href="#tqdm-demo" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">tqdm</span>
-
-<span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">memlist</span><span class="p">,</span> <span class="n">memfile</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">time_taken</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-
-
-<span class="nd">@memfile</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;results.jsonl&quot;</span><span class="p">)</span>
-<span class="nd">@memlist</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-<span class="nd">@time_taken</span><span class="p">()</span>
-<span class="k">def</span> <span class="nf">birthday_experiment</span><span class="p">(</span><span class="n">class_size</span><span class="p">,</span> <span class="n">n_sim</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Simulates the birthday paradox. Vectorized = Fast!&quot;&quot;&quot;</span>
-    <span class="n">sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">365</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">n_sim</span><span class="p">,</span> <span class="n">class_size</span><span class="p">))</span>
-    <span class="n">sort_sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">sims</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">n_uniq</span> <span class="o">=</span> <span class="p">(</span><span class="n">sort_sims</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">!=</span> <span class="n">sort_sims</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="n">proba</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">n_uniq</span> <span class="o">!=</span> <span class="n">class_size</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;est_proba&quot;</span><span class="p">:</span> <span class="n">proba</span><span class="p">}</span>
-
-
-<span class="n">settings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">grid</span><span class="p">(</span><span class="n">class_size</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span> <span class="n">n_sim</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">,</span> <span class="mi">1_000_000</span><span class="p">]))</span>
-
-<span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">settings</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">(</span><span class="n">class_size</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">n_sim</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">,</span> <span class="mi">1_000_000</span><span class="p">]):</span>
     <span class="n">birthday_experiment</span><span class="p">(</span><span class="o">**</span><span class="n">setting</span><span class="p">)</span>
 </code></pre></div>
 
+<p>Note that you can turn the grid off via <code>grid(progbar=False, ...)</code>.</p>
 <h2 id="can-i-get-amazing-visualisations">Can I get amazing visualisations?<a class="headerlink" href="#can-i-get-amazing-visualisations" title="Permanent link">&para;</a></h2>
 <p>Sure, but they won't be supplied by this package. Instead we might
 recommend checking out <a href="https://github.com/facebookresearch/hiplot">hiplot</a>.
