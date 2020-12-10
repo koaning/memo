@@ -39,7 +39,7 @@ for size in range(2, 40):
 
 The decorator ensures that all the keyword arguments and dictionary 
 outputs of a function are logged. To see how it works in more detail, 
-check the [quickstart](/getting-started.html)
+check the [quickstart](https://koaning.github.io/memo/getting-started.html)
 
 ## Features 
 
