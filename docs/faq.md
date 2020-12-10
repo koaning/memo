@@ -1,6 +1,6 @@
 ## Do I really need to output a dictionary? 
 
-It's an opinionated packages but we thinkg it's neater that way. 
+It's an opinionated packages but we think it's neater that way. 
 You'll usually want to have a name attached to column names in 
 a dataframe and functions can have multiple outputs.  
 
