@@ -8,7 +8,9 @@ pip install memo
 
 ## Documentation
 
-The documentation can be found [here]().
+The documentation can be found [here](https://koaning.github.io/memo/).
+
+The quickstart guide is found [here](https://koaning.github.io/memo/getting-started.html).
 
 ## Usage
 
