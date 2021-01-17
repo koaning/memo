@@ -41,6 +41,12 @@ The decorator ensures that all the keyword arguments and dictionary
 outputs of a function are logged. To see how it works in more detail, 
 check the [quickstart](https://koaning.github.io/memo/getting-started.html)
 
+## Tutorial 
+
+> There is a full course on this tool available on [calmcode.io](https://calmcode.io). This is the first video.
+
+<iframe src="https://player.vimeo.com/video/501200867" width="100%" height="460" frameborder="0" allow="autoplay; fullscreen" allowfullscreen=""></iframe>
+
 ## Features 
 
 This library also offers decorators to pipe to other sources. 
