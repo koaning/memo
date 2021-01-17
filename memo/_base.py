@@ -1,8 +1,9 @@
 import orjson
+from typing import Callable, List
 from functools import wraps
 
 
-def memlist(data):
+def memlist(data: List):
     """
     Remembers input/output of a function in python list.
 
@@ -49,7 +50,7 @@ def memlist(data):
     return decorator
 
 
-def memfile(filepath):
+def memfile(filepath: str):
     """
     Remembers input/output of a function in a jsonl file on disk.
 
@@ -86,7 +87,7 @@ def memfile(filepath):
     return decorator
 
 
-def memfunc(callback):
+def memfunc(callback: Callable):
     """
     Remembers input/output of a function by printing.
 

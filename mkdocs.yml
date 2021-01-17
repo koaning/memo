@@ -11,7 +11,7 @@ nav:
       - Getting Started: getting-started.md
       - FAQ: faq.md
   - API:
-      - Grab: api.md
+      - Main: api.md
       - Utility: util.md
 plugins:
   - mkdocstrings:

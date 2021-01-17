@@ -27,7 +27,7 @@ web_packages = ["httpx>=0.16.1"] + base_packages
 
 setup(
     name="memo",
-    version="0.1.2",
+    version="0.1.3",
     packages=find_packages(exclude=["notebooks"]),
     install_requires=base_packages,
     extras_require={
