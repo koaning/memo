@@ -43,7 +43,7 @@ check the [quickstart](https://koaning.github.io/memo/getting-started.html)
 
 ## Tutorial 
 
-> There is a full course on this tool available on [calmcode.io](https://calmcode.io). This is the first video.
+> There is a full course on this tool available on [calmcode.io](https://calmcode.io/memo/introduction.html). This is the first video.
 
 <iframe src="https://player.vimeo.com/video/501200867" width="100%" height="460" frameborder="0" allow="autoplay; fullscreen" allowfullscreen=""></iframe>
 
