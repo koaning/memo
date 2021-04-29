@@ -1,6 +1,6 @@
 from ._error import NotInstalled
 from ._grid import grid, random_grid
-from ._base import memlist, memfile, memfunc
+from ._base import memlist, memfile, memfunc, mempar
 from ._util import time_taken
 
 try:
@@ -17,4 +17,5 @@ __all__ = [
     "memfunc",
     "memweb",
     "time_taken",
+    "mempar"
 ]

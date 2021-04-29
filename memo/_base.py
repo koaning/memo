@@ -1,6 +1,60 @@
 import orjson
 from typing import Callable, List
+from types import GeneratorType
 from functools import wraps
+from joblib import Parallel, delayed, parallel_backend
+
+
+def mempar(*args, **kwargs):
+    """Wraps joblib's Parallel for easy parallelization
+    @mempar will parrallelize any function that is wrapped with @memlist
+    The function to be parrellized must be called with an interable containing
+    key : value pairs that match the original signature of the function (see example).
+
+
+    # Arguments:
+        *args : passes through all positional arguments to parrallel_backend context manager
+        **kwargs : passes through all keyword arguments to parrallel_backend context manager
+
+    # Raises:
+        TypeError : if iterable_ is anything other than list, tuple, or a generator
+    # Example:
+    ```python
+    from memo import memlist, grid, mempar
+    data = []
+    @mempar(backend="threading", n_jobs=-1)
+    @memlist(data=data)
+    def birthday_experiment(class_size, n_sim):
+        sims = np.random.randint(1, 365 + 1, (n_sim, class_size))
+        sort_sims = np.sort(sims, axis=1)
+        n_uniq = (sort_sims[:, 1:] != sort_sims[:, :-1]).sum(axis=1) + 1
+        proba = np.mean(n_uniq != class_size)
+        return {"est_proba": proba}
+
+    g = grid(
+        progbar=False, class_size=[5, 10, 20, 30, 40], n_sim=[1000, 1_000_000, 50, 200]
+    )
+
+    birthday_experiment(g)
+    ```
+    """
+
+    def decorator(func):
+        @wraps(func)
+        def wrapper(
+            iterable_,
+        ):
+            if not isinstance(iterable_, (list, tuple, set, GeneratorType)):
+                raise TypeError(f"Type {type(iterable_)} not supported")
+            else:
+                with parallel_backend(*args, **kwargs):
+                    Parallel(require="sharedmem")(
+                        delayed(func)(**settings) for settings in iterable_
+                    )
+
+        return wrapper
+
+    return decorator
 
 
 def memlist(data: List):
