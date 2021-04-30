@@ -1,11 +1,46 @@
+
 import orjson
 from typing import Callable, List
 from types import GeneratorType
 from functools import wraps
 from joblib import Parallel, delayed, parallel_backend
+import joblib.parallel
+from rich.progress import Progress
+import time
+
+# class BatchCompletionCallBack(object):
+
+#     def __init__(self, dispatch_timestamp, batch_size, parallel):
+#         self.dispatch_timestamp = dispatch_timestamp
+#         self.batch_size = batch_size
+#         self.parallel = parallel
+
+#     def __call__(self, out):
+
+#         self.parallel.n_completed_tasks += self.batch_size
+#         this_batch_duration = time.time() - self.dispatch_timestamp
+
+#         self.parallel._backend.batch_completed(self.batch_size,
+#                                                this_batch_duration)
+#         self.parallel.print_progress()
+#         self._update()
+#         with self.parallel._lock:
+#             if self.parallel._original_iterator is not None:
+#                 self.parallel.dispatch_next()
+
+#     @classmethod
+#     def _setup(cls, total):
+#         cls.total = total
+#         with Progress() as cls.progress:
+#             cls.task = cls.progress.add_task("[red]Mempar....", total=cls.total)
+#             return cls
+
+#     def _update(self):
+#         self.progress.update(self.task, completed=self.parallel.n_completed_tasks / self.total, refresh=True)
+#         # self.progress.refresh()
 
 
-def mempar(*args, **kwargs):
+def mempar(*args, progbar=True, **kwargs):
     """Wraps joblib's Parallel for easy parallelization
     @mempar will parrallelize any function that is wrapped with @memlist
     The function to be parrellized must be called with an interable containing
@@ -14,6 +49,7 @@ def mempar(*args, **kwargs):
 
     # Arguments:
         *args : passes through all positional arguments to parrallel_backend context manager
+        progbar: bool Display progress bar. Defaults to True
         **kwargs : passes through all keyword arguments to parrallel_backend context manager
 
     # Raises:
@@ -44,8 +80,39 @@ def mempar(*args, **kwargs):
         def wrapper(
             iterable_,
         ):
+
             if not isinstance(iterable_, (list, tuple, set, GeneratorType)):
                 raise TypeError(f"Type {type(iterable_)} not supported")
+            elif progbar and not isinstance(iterable_, GeneratorType):
+                total = len(iterable_)
+                with Progress() as progress:
+                    task = progress.add_task("[red]Mempar....", total=total)
+
+                    class BatchCompletionCallBack(object):
+
+                        def __init__(self, dispatch_timestamp, batch_size, parallel):
+                            self.dispatch_timestamp = dispatch_timestamp
+                            self.batch_size = batch_size
+                            self.parallel = parallel
+
+                        def __call__(self, out):
+                            self.parallel.n_completed_tasks += self.batch_size
+                            this_batch_duration = time.time() - self.dispatch_timestamp
+
+                            self.parallel._backend.batch_completed(self.batch_size,
+                                                                   this_batch_duration)
+
+                            self.parallel.print_progress()
+                            progress.update(task, completed=self.parallel.n_completed_tasks, refresh=True)
+                            with self.parallel._lock:
+                                if self.parallel._original_iterator is not None:
+                                    self.parallel.dispatch_next()
+
+                    joblib.parallel.BatchCompletionCallBack = BatchCompletionCallBack
+                    with parallel_backend(*args, **kwargs):
+                        Parallel(require="sharedmem")(
+                            delayed(func)(**settings) for settings in iterable_
+                        )
             else:
                 with parallel_backend(*args, **kwargs):
                     Parallel(require="sharedmem")(
