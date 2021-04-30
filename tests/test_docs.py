@@ -3,10 +3,10 @@ import pathlib
 import pytest
 
 from mktestdocs import check_md_file, check_docstring
-from memo import memlist, memfunc, memfile, time_taken, grid, random_grid
+from memo import memlist, memfunc, memfile, time_taken, grid, random_grid, mempar
 
 files = [str(p) for p in pathlib.Path("docs").glob("*.md")] + ["README.md"]
-functions = [memlist, memfunc, memfile, time_taken, grid, random_grid]
+functions = [memlist, memfunc, memfile, time_taken, grid, random_grid, mempar]
 
 
 @pytest.mark.parametrize("fpath", files)
