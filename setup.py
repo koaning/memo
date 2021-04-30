@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-base_packages = ["rich>=9.2.0", "orjson>=3.4.5"]
+base_packages = ["rich>=9.2.0", "orjson>=3.4.5", "joblib>=1.0.1"]
 
 test_packages = [
     "flake8>=3.6.0",
