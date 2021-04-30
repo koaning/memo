@@ -8,37 +8,6 @@ import joblib.parallel
 from rich.progress import Progress
 import time
 
-# class BatchCompletionCallBack(object):
-
-#     def __init__(self, dispatch_timestamp, batch_size, parallel):
-#         self.dispatch_timestamp = dispatch_timestamp
-#         self.batch_size = batch_size
-#         self.parallel = parallel
-
-#     def __call__(self, out):
-
-#         self.parallel.n_completed_tasks += self.batch_size
-#         this_batch_duration = time.time() - self.dispatch_timestamp
-
-#         self.parallel._backend.batch_completed(self.batch_size,
-#                                                this_batch_duration)
-#         self.parallel.print_progress()
-#         self._update()
-#         with self.parallel._lock:
-#             if self.parallel._original_iterator is not None:
-#                 self.parallel.dispatch_next()
-
-#     @classmethod
-#     def _setup(cls, total):
-#         cls.total = total
-#         with Progress() as cls.progress:
-#             cls.task = cls.progress.add_task("[red]Mempar....", total=cls.total)
-#             return cls
-
-#     def _update(self):
-#         self.progress.update(self.task, completed=self.parallel.n_completed_tasks / self.total, refresh=True)
-#         # self.progress.refresh()
-
 
 def mempar(*args, progbar=True, **kwargs):
     """Wraps joblib's Parallel for easy parallelization
