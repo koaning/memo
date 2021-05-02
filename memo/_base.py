@@ -1,96 +1,78 @@
-
 import orjson
-from typing import Callable, List
+from typing import Callable, Dict, List, Iterable
 from types import GeneratorType
 from functools import wraps
 from joblib import Parallel, delayed, parallel_backend
 import joblib.parallel
 from rich.progress import Progress
 import time
+import warnings
 
 
-def mempar(*args, progbar=True, **kwargs):
-    """Wraps joblib's Parallel for easy parallelization
-    @mempar will parrallelize any function that is wrapped with @memlist
-    The function to be parrellized must be called with an interable containing
-    key : value pairs that match the original signature of the function (see example).
+class Runner():
 
+    def __init__(self, *args, **kwargs, ):
+        self.args = args
+        self.kwargs = kwargs
 
-    # Arguments:
-        *args : passes through all positional arguments to parrallel_backend context manager
-        progbar: bool Display progress bar. Defaults to True
-        **kwargs : passes through all keyword arguments to parrallel_backend context manager
+    def _run(self, func: Callable, settings: Iterable[Dict]) -> None:
+        """run the parallel backend
+            Private. All arguments passed through run method
+        """
+        try:
+            with parallel_backend(*self.args, **self.kwargs):
+                Parallel(require="sharedmem")(
+                    delayed(func)(**settings) for settings in settings
+                )
+        except TypeError as e:  # Help for the User as the traceback is not helpful when keyword argument is wrong
+            import sys
+            raise type(e)(str(e) + "\nCheck that arguments to Runner() are correct").with_traceback(sys.exc_info()[2])
 
-    # Raises:
-        TypeError : if iterable_ is anything other than list, tuple, or a generator
-    # Example:
-    ```python
-    from memo import memlist, grid, mempar
-    data = []
-    @mempar(backend="threading", n_jobs=-1)
-    @memlist(data=data)
-    def birthday_experiment(class_size, n_sim):
-        sims = np.random.randint(1, 365 + 1, (n_sim, class_size))
-        sort_sims = np.sort(sims, axis=1)
-        n_uniq = (sort_sims[:, 1:] != sort_sims[:, :-1]).sum(axis=1) + 1
-        proba = np.mean(n_uniq != class_size)
-        return {"est_proba": proba}
+    def run(self, func: Callable, settings: Iterable[Dict], progbar: bool = True) -> None:
+        """Run function with joblibs parallel backend
 
-    g = grid(
-        progbar=False, class_size=[5, 10, 20, 30, 40], n_sim=[1000, 1_000_000, 50, 200]
-    )
+        Args:
+            func (Callable): The function to be run in parallel. 
+            settings (Iterable): An Iterable of Key-value pairs. 
+            progbar (bool, optional): Show progress bar. Defaults to True.
 
-    birthday_experiment(g)
-    ```
-    """
+        Raises:
+            TypeError: When **kwargs doesn't match signature of `parallel_backend`
+        """
+        if not isinstance(settings, (list, tuple, set, GeneratorType)):  # check settings is iterable
+            raise TypeError(f"Type {type(settings)} not supported")
+        elif progbar and not isinstance(settings, GeneratorType):
+            total = len(settings)
+            with Progress() as progress:
+                task = progress.add_task("[red]Runner....", total=total)
 
-    def decorator(func):
-        @wraps(func)
-        def wrapper(
-            iterable_,
-        ):
+                class BatchCompletionCallBack(object):
 
-            if not isinstance(iterable_, (list, tuple, set, GeneratorType)):
-                raise TypeError(f"Type {type(iterable_)} not supported")
-            elif progbar and not isinstance(iterable_, GeneratorType):
-                total = len(iterable_)
-                with Progress() as progress:
-                    task = progress.add_task("[red]Mempar....", total=total)
+                    def __init__(self, dispatch_timestamp, batch_size, parallel):
+                        self.dispatch_timestamp = dispatch_timestamp
+                        self.batch_size = batch_size
+                        self.parallel = parallel
 
-                    class BatchCompletionCallBack(object):
+                    def __call__(self, out):
+                        self.parallel.n_completed_tasks += self.batch_size
+                        this_batch_duration = time.time() - self.dispatch_timestamp
 
-                        def __init__(self, dispatch_timestamp, batch_size, parallel):
-                            self.dispatch_timestamp = dispatch_timestamp
-                            self.batch_size = batch_size
-                            self.parallel = parallel
+                        self.parallel._backend.batch_completed(self.batch_size,
+                                                               this_batch_duration)
 
-                        def __call__(self, out):
-                            self.parallel.n_completed_tasks += self.batch_size
-                            this_batch_duration = time.time() - self.dispatch_timestamp
-
-                            self.parallel._backend.batch_completed(self.batch_size,
-                                                                   this_batch_duration)
-
-                            self.parallel.print_progress()
-                            progress.update(task, completed=self.parallel.n_completed_tasks, refresh=True)
-                            with self.parallel._lock:
-                                if self.parallel._original_iterator is not None:
-                                    self.parallel.dispatch_next()
-
-                    joblib.parallel.BatchCompletionCallBack = BatchCompletionCallBack
-                    with parallel_backend(*args, **kwargs):
-                        Parallel(require="sharedmem")(
-                            delayed(func)(**settings) for settings in iterable_
-                        )
-            else:
-                with parallel_backend(*args, **kwargs):
-                    Parallel(require="sharedmem")(
-                        delayed(func)(**settings) for settings in iterable_
-                    )
-
-        return wrapper
-
-    return decorator
+                        self.parallel.print_progress()
+                        # Update progress bar
+                        progress.update(task, completed=self.parallel.n_completed_tasks, refresh=True)
+                        with self.parallel._lock:
+                            if self.parallel._original_iterator is not None:
+                                self.parallel.dispatch_next()
+                # Monkey patch
+                joblib.parallel.BatchCompletionCallBack = BatchCompletionCallBack
+                self._run(func, settings)
+        else:
+            if isinstance(settings, GeneratorType):
+                warnings.warn("Progress bar not supported for generator settings")
+            self._run(func, settings)
 
 
 def memlist(data: List):
