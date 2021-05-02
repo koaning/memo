@@ -3,13 +3,13 @@ import warnings
 from memo import memlist, Runner, grid
 
 
-@pytest.mark.parametrize("kw", [{"backend": "loky", "n_jobs": -1}, {"backend": "threading", "n_jobs": -1}, {"backend": "multiprocessing", "n_jobs": -1}])
+@pytest.mark.parametrize("kw", [{"backend": "loky"}, {"backend": "threading"}, {"backend": "multiprocessing"}])
 def test_base_multiple_calls(kw):
     data = []
     g = [{"a": 1}] * 100
 
     @memlist(data=data)
-    def count_values(**kwargs):
+    def count_values(n_jobs=-1, **kwargs):
         return {"sum": sum(kwargs.values())}
 
     runner = Runner(**kw)
@@ -17,7 +17,7 @@ def test_base_multiple_calls(kw):
     assert len(data) == len(g)
 
 
-@pytest.mark.parametrize("kw", [{"backend": "loky", "n_jobs": -1}, {"backend": "threading", "n_jobs": -1}, {"backend": "multiprocessing", "n_jobs": -1}])
+@pytest.mark.parametrize("kw", [{"backend": "loky"}, {"backend": "threading"}, {"backend": "multiprocessing"}])
 def test_keys_included(kw):
     data = []
     g = [{"a": 3, "b": 4, "c": 5}]
@@ -26,13 +26,13 @@ def test_keys_included(kw):
     def count_values(**kwargs):
         return {"sum": sum(kwargs.values())}
 
-    runner = Runner(**kw)
+    runner = Runner(n_jobs=-1, **kw)
     runner.run(func=count_values, settings=g, progbar=True)
     assert len(data) == 1
     assert all([k in data[0].keys() for k in g[0].keys()])
 
 
-@pytest.mark.parametrize("kw", [{"backend": "loky", "n_jobs": -1}, {"backend": "threading", "n_jobs": -1}, {"backend": "multiprocessing", "n_jobs": -1}])
+@pytest.mark.parametrize("kw", [{"backend": "loky"}, {"backend": "threading"}, {"backend": "multiprocessing"}])
 def test_base_args_included(kw):
     data = []
 
@@ -41,7 +41,7 @@ def test_base_args_included(kw):
         return {"sum": sum(kwargs.values())}
 
     g = [{"a": 1, "b": 2, "c": 1}, {"a": 1, "b": 2, "c": 1}]
-    runner = Runner(**kw)
+    runner = Runner(n_jobs=-1, **kw)
     runner.run(func=count_values, settings=g, progbar=True)
     assert len(data) == 2
     assert data[0]["a"] == 1
