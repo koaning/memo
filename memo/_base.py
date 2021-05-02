@@ -1,5 +1,5 @@
 import orjson
-from typing import Callable, Dict, List, Iterable
+from typing import Callable, Dict, List, Iterable, Optional
 from types import GeneratorType
 from functools import wraps
 from joblib import Parallel, delayed, parallel_backend
@@ -10,17 +10,40 @@ import warnings
 
 
 class Runner():
+    """Run functions in parallel with joblib
+        joblib has 3 standard options for backends. 2 process based {"loky", "multiprocessing"}
+        and 1 thread based {"threading"}. Depending on the function you wish to run one approach
+        may be considerably faster than another. See links for more details
 
-    def __init__(self, *args, **kwargs, ):
+        The other important argument is the number of jobs `n_jobs` which dictates the
+        number of cpu cores for proecess based backends or number of threads for thread
+        based backend. You can pass -1 to use all cores available or the number
+        you'd like to run e.g n_jobs=2. Be aware that over-subscription of CPU resources
+        e.g n_jobs=32 on a 6 core processer will adversely affect performance
+        See links for more details
+
+        All keyword arguments during instantiaition will pass through to `parallel_backend`
+
+        Notes
+        joblib can also attach to third party backends such as Ray or Apache spark,
+        however that functionality has not yet been tested
+
+        Links
+        https://joblib.readthedocs.io/en/latest/parallel.html
+    """
+
+    def __init__(self, *args, backend: Optional[str] = 'loky', n_jobs: Optional[int] = None, **kwargs, ):
         self.args = args
         self.kwargs = kwargs
+        self.backend = backend
+        self.n_jobs = n_jobs
 
     def _run(self, func: Callable, settings: Iterable[Dict]) -> None:
         """run the parallel backend
             Private. All arguments passed through run method
         """
         try:
-            with parallel_backend(*self.args, **self.kwargs):
+            with parallel_backend(*self.args, self.backend, self.n_jobs, **self.kwargs):
                 Parallel(require="sharedmem")(
                     delayed(func)(**settings) for settings in settings
                 )
