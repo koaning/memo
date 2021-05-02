@@ -1,3 +1,4 @@
+from memo import Runner
 import numpy as np
 
 from memo import memlist, memfile, grid, time_taken
@@ -19,3 +20,11 @@ def birthday_experiment(class_size, n_sim):
 
 for setting in grid(class_size=range(20, 30), n_sim=[100, 10_000, 1_000_000]):
     birthday_experiment(**setting)
+
+
+# To Run in parallel
+
+
+settings = grid(class_size=range(20, 30), n_sim=[100, 10_000, 1_000_000], progbar=False)
+runner = Runner(backend="threading", n_jobs=-1)
+runner.run(func=birthday_experiment, settings=settings)
