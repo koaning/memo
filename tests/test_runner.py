@@ -1,5 +1,6 @@
 import pytest
-from memo import memlist, mempar
+import warnings
+from memo import memlist, Runner, grid
 
 
 @pytest.mark.parametrize("kw", [{"backend": "loky", "n_jobs": -1}, {"backend": "threading", "n_jobs": -1}, {"backend": "multiprocessing", "n_jobs": -1}])
@@ -7,12 +8,12 @@ def test_base_multiple_calls(kw):
     data = []
     g = [{"a": 1}] * 100
 
-    @mempar(**kw)
     @memlist(data=data)
     def count_values(**kwargs):
         return {"sum": sum(kwargs.values())}
 
-    count_values(g)
+    runner = Runner(**kw)
+    runner.run(func=count_values, settings=g, progbar=True)
     assert len(data) == len(g)
 
 
@@ -21,13 +22,12 @@ def test_keys_included(kw):
     data = []
     g = [{"a": 3, "b": 4, "c": 5}]
 
-    @mempar(**kw)
     @memlist(data=data)
     def count_values(**kwargs):
         return {"sum": sum(kwargs.values())}
 
-    count_values(g)
-
+    runner = Runner(**kw)
+    runner.run(func=count_values, settings=g, progbar=True)
     assert len(data) == 1
     assert all([k in data[0].keys() for k in g[0].keys()])
 
@@ -36,12 +36,13 @@ def test_keys_included(kw):
 def test_base_args_included(kw):
     data = []
 
-    @mempar(**kw)
     @memlist(data=data)
     def count_values(a, b, **kwargs):
         return {"sum": sum(kwargs.values())}
 
-    count_values([{"a": 1, "b": 2, "c": 1}, {"a": 1, "b": 2, "c": 1}])
+    g = [{"a": 1, "b": 2, "c": 1}, {"a": 1, "b": 2, "c": 1}]
+    runner = Runner(**kw)
+    runner.run(func=count_values, settings=g, progbar=True)
     assert len(data) == 2
     assert data[0]["a"] == 1
     assert data[0]["b"] == 2
@@ -56,9 +57,24 @@ def test_raises_type_error():
     g = {"a": 3, "b": 4, "c": 5}
 
     with pytest.raises(TypeError):
-        @mempar(backend="threading", n_jobs=-1)
         @memlist(data=data)
         def count_values(**kwargs):
             return {"sum": sum(kwargs.values())}
 
         count_values(g)
+        runner = Runner(backend="threading", workers=-1)
+        runner.run(func=count_values, settings=g, progbar=True)
+
+
+def test_generator_progbar_warning():
+    data = []
+    g = grid(class_size=[5, 6], n_sim=[1000, 1_000_000])
+
+    with pytest.warns(UserWarning, match="Progress bar not supported for generator settings"):
+
+        @memlist(data=data)
+        def count_values(**kwargs):
+            return {"sum": sum(kwargs.values())}
+
+        runner = Runner(backend="threading", n_jobs=-1)
+        runner.run(func=count_values, settings=g, progbar=True)
