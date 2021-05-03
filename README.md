@@ -92,7 +92,7 @@ This library also offers decorators to pipe to other sources.
 - `random_grid` generates a randomized grid for your experiments
 - `time_taken` also logs the time the function takes to run
 
-And an Option to parallelize function calls using joblib
+And an option to parallelize function calls using joblib.
 
 - `Runner`
 
