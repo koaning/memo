@@ -1,6 +1,101 @@
 import orjson
-from typing import Callable, List
+from typing import Callable, Dict, List, Iterable, Optional
+from types import GeneratorType
 from functools import wraps
+from joblib import Parallel, delayed, parallel_backend
+import joblib.parallel
+from rich.progress import Progress
+import time
+import warnings
+
+
+class Runner():
+    """Run functions in parallel with joblib
+        joblib has 3 standard options for backends. 2 process based {"loky", "multiprocessing"}
+        and 1 thread based {"threading"}. Depending on the function you wish to run one approach
+        may be considerably faster than another. See links for more details
+
+        The other important argument is the number of jobs `n_jobs` which dictates the
+        number of cpu cores for proecess based backends or number of threads for thread
+        based backend. You can pass -1 to use all cores available or the number
+        you'd like to run e.g n_jobs=2. Be aware that over-subscription of CPU resources
+        e.g n_jobs=32 on a 6 core processer will adversely affect performance
+        See links for more details
+
+        All keyword arguments during instantiaition will pass through to `parallel_backend`
+
+        Notes
+        joblib can also attach to third party backends such as Ray or Apache spark,
+        however that functionality has not yet been tested
+
+        Links
+        https://joblib.readthedocs.io/en/latest/parallel.html
+    """
+
+    def __init__(self, *args, backend: Optional[str] = 'loky', n_jobs: Optional[int] = None, **kwargs, ):
+        self.args = args
+        self.kwargs = kwargs
+        self.backend = backend
+        self.n_jobs = n_jobs
+
+    def _run(self, func: Callable, settings: Iterable[Dict]) -> None:
+        """run the parallel backend
+            Private. All arguments passed through run method
+        """
+        try:
+            with parallel_backend(*self.args, self.backend, self.n_jobs, **self.kwargs):
+                Parallel(require="sharedmem")(
+                    delayed(func)(**settings) for settings in settings
+                )
+        except TypeError as e:  # Help for the User as the traceback is not helpful when keyword argument is wrong
+            import sys
+            raise type(e)(str(e) + "\nCheck that arguments to Runner() are correct").with_traceback(sys.exc_info()[2])
+
+    def run(self, func: Callable, settings: Iterable[Dict], progbar: bool = True) -> None:
+        """Run function with joblibs parallel backend
+
+        Args:
+            func (Callable): The function to be run in parallel. 
+            settings (Iterable): An Iterable of Key-value pairs. 
+            progbar (bool, optional): Show progress bar. Defaults to True.
+
+        Raises:
+            TypeError: When **kwargs doesn't match signature of `parallel_backend`
+        """
+        if not isinstance(settings, (list, tuple, set, GeneratorType)):  # check settings is iterable
+            raise TypeError(f"Type {type(settings)} not supported")
+        elif progbar and not isinstance(settings, GeneratorType):
+            total = len(settings)
+            with Progress() as progress:
+                task = progress.add_task("[red]Runner....", total=total)
+
+                class BatchCompletionCallBack(object):
+
+                    def __init__(self, dispatch_timestamp, batch_size, parallel):
+                        self.dispatch_timestamp = dispatch_timestamp
+                        self.batch_size = batch_size
+                        self.parallel = parallel
+
+                    def __call__(self, out):
+                        self.parallel.n_completed_tasks += self.batch_size
+                        this_batch_duration = time.time() - self.dispatch_timestamp
+
+                        self.parallel._backend.batch_completed(self.batch_size,
+                                                               this_batch_duration)
+
+                        self.parallel.print_progress()
+                        # Update progress bar
+                        progress.update(task, completed=self.parallel.n_completed_tasks, refresh=True)
+                        with self.parallel._lock:
+                            if self.parallel._original_iterator is not None:
+                                self.parallel.dispatch_next()
+                # Monkey patch
+                joblib.parallel.BatchCompletionCallBack = BatchCompletionCallBack
+                self._run(func, settings)
+        else:
+            if isinstance(settings, GeneratorType):
+                warnings.warn("Progress bar not supported for generator settings")
+            self._run(func, settings)
 
 
 def memlist(data: List):
