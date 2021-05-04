@@ -1,6 +1,7 @@
 from ._error import NotInstalled
 from ._grid import grid, random_grid
-from ._base import memlist, memfile, memfunc, Runner
+from ._base import memlist, memfile, memfunc
+from ._runner import Runner
 from ._util import time_taken
 
 try:
