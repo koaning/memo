@@ -92,7 +92,7 @@ class Runner:
             proba = np.mean(n_uniq != class_size)
             return {"est_proba": proba}
 
-        settings = grid(class_size=range(20, 30), n_sim=[100, 10_000, 1_000_000], progbar=False)
+        settings = grid(class_size=range(20, 30), n_sim=[100, 10_000], progbar=False)
 
         # To Run in parallel
         runner = Runner(backend="threading", n_jobs=-1)
