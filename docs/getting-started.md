@@ -138,6 +138,37 @@ for settings in grid(class_size=range(2, 40), n_sim=[1000, 10000, 100000]):
     birthday_experiment(**settings)
 ```
 
+## Parallel 
+
+If you have a lot of simulations you'd like to run, it might be helpful to
+run them in parallel. That's why this library also hosts a `Runner` class 
+that can run your functions on multiple CPU cores.
+
+```python
+import numpy as np
+
+from memo import memlist, memfile, grid, time_taken, Runner
+
+data = []
+
+@memfile(filepath="results.jsonl")
+@memlist(data=data)
+@time_taken()
+def birthday_experiment(class_size, n_sim):
+    """Simulates the birthday paradox. Vectorized = Fast!"""
+    sims = np.random.randint(1, 365 + 1, (n_sim, class_size))
+    sort_sims = np.sort(sims, axis=1)
+    n_uniq = (sort_sims[:, 1:] != sort_sims[:, :-1]).sum(axis=1) + 1
+    proba = np.mean(n_uniq != class_size)
+    return {"est_proba": proba}
+
+settings = grid(class_size=range(20, 30), n_sim=[100, 10_000, 1_000_000], progbar=False)
+
+# To Run in parallel
+runner = Runner(backend="threading", n_jobs=-1)
+runner.run(func=birthday_experiment, settings=settings)
+```
+
 ## More features
 
 These decorators aren't performing magic, but my experience has been
@@ -147,12 +178,6 @@ worry about logging the statistics.
 
 The library also offers extra features to make things a whole *log* simpler.  
 
-- `memlists` sends the json blobs to a list
-- `memfile` sends the json blobs to a file 
 - `memweb` sends the json blobs to a server via http-post requests
 - `memfunc` sends the data to a callable that you supply, like `print`
-- `grid` generates a convenient grid for your experiments
 - `random_grid` generates a randomized grid for your experiments
-- `time_taken` also logs the time the function takes to run
-
-Check out the [API docs]() to explore these in more detail.

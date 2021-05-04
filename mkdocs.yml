@@ -12,6 +12,7 @@ nav:
       - FAQ: faq.md
   - API:
       - Main: api.md
+      - Runner: runner.md
       - Utility: util.md
 plugins:
   - mkdocstrings:

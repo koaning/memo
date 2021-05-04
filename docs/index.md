@@ -58,3 +58,10 @@ This library also offers decorators to pipe to other sources.
 - `grid` generates a convenient grid for your experiments
 - `random_grid` generates a randomized grid for your experiments
 - `time_taken` also logs the time the function takes to run
+
+We also offer an option to parallelize function calls using joblib. This
+is facilitated with a `Runner` class which supports multiple backends.
+
+- `Runner(backend="loky")`
+- `Runner(backend="threading")`
+- `Runner(backend="multiprocessing")`

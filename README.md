@@ -92,9 +92,12 @@ This library also offers decorators to pipe to other sources.
 - `random_grid` generates a randomized grid for your experiments
 - `time_taken` also logs the time the function takes to run
 
-And an option to parallelize function calls using joblib.
+We also offer an option to parallelize function calls using joblib. This
+is facilitated with a `Runner` class which supports multiple backends.
 
-- `Runner`
+- `Runner(backend="loky")`
+- `Runner(backend="threading")`
+- `Runner(backend="multiprocessing")`
 
 Check the API docs [here](https://koaning.github.io/memo/util.html) for more information on
 how these work.
