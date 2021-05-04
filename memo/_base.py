@@ -9,29 +9,35 @@ import time
 import warnings
 
 
-class Runner():
+class Runner:
     """
     Run functions in parallel with joblib.
-    
+
     Arguments:
         backend: choice of parallism backend, can be "loky", "multiprocessing" or "threading"
-        n_jobs: degree of parallism, set to -1 to use all available cores 
+        n_jobs: degree of parallism, set to -1 to use all available cores
 
     All keyword arguments during instantiaition will pass through to `parallel_backend`.
     More information on joblib can be found [here](https://joblib.readthedocs.io/en/latest/parallel.html).
     Joblib can also attach to third party backends such as Ray or Apache spark,
     however that functionality has not yet been tested.
-    
+
     Usage:
-    
+
     ```python
     from memo import Runner
-    
+
     runner = Runner(backend='threading', n_jobs=2)
     ```
     """
 
-    def __init__(self, *args, backend: Optional[str] = 'loky', n_jobs: Optional[int] = None, **kwargs, ):
+    def __init__(
+        self,
+        *args,
+        backend: Optional[str] = "loky",
+        n_jobs: Optional[int] = None,
+        **kwargs,
+    ):
         self.args = args
         self.kwargs = kwargs
         self.backend = backend
@@ -39,7 +45,7 @@ class Runner():
 
     def _run(self, func: Callable, settings: Iterable[Dict]) -> None:
         """run the parallel backend
-            Private. All arguments passed through run method
+        Private. All arguments passed through run method
         """
         try:
             with parallel_backend(*self.args, self.backend, self.n_jobs, **self.kwargs):
@@ -48,21 +54,26 @@ class Runner():
                 )
         except TypeError as e:  # Help for the User as the traceback is not helpful when keyword argument is wrong
             import sys
-            raise type(e)(str(e) + "\nCheck that arguments to Runner() are correct").with_traceback(sys.exc_info()[2])
 
-    def run(self, func: Callable, settings: Iterable[Dict], progbar: bool = True) -> None:
+            raise type(e)(
+                str(e) + "\nCheck that arguments to Runner() are correct"
+            ).with_traceback(sys.exc_info()[2])
+
+    def run(
+        self, func: Callable, settings: Iterable[Dict], progbar: bool = True
+    ) -> None:
         """Run function with joblibs parallel backend
 
         Args:
-            func (Callable): The function to be run in parallel. 
-            settings (Iterable): An Iterable of Key-value pairs. 
+            func (Callable): The function to be run in parallel.
+            settings (Iterable): An Iterable of Key-value pairs.
             progbar (bool, optional): Show progress bar. Defaults to True.
 
         Raises:
             TypeError: When **kwargs doesn't match signature of `parallel_backend`
-        
-        Usage: 
-        
+
+        Usage:
+
         ```python
         from memo import Runner
         import numpy as np
@@ -82,13 +93,15 @@ class Runner():
             return {"est_proba": proba}
 
         settings = grid(class_size=range(20, 30), n_sim=[100, 10_000, 1_000_000], progbar=False)
-        
+
         # To Run in parallel
         runner = Runner(backend="threading", n_jobs=-1)
         runner.run(func=birthday_experiment, settings=settings)
         ```
         """
-        if not isinstance(settings, (list, tuple, set, GeneratorType)):  # check settings is iterable
+        if not isinstance(
+            settings, (list, tuple, set, GeneratorType)
+        ):  # check settings is iterable
             raise TypeError(f"Type {type(settings)} not supported")
         elif progbar and not isinstance(settings, GeneratorType):
             total = len(settings)
@@ -96,7 +109,6 @@ class Runner():
                 task = progress.add_task("[red]Runner....", total=total)
 
                 class BatchCompletionCallBack(object):
-
                     def __init__(self, dispatch_timestamp, batch_size, parallel):
                         self.dispatch_timestamp = dispatch_timestamp
                         self.batch_size = batch_size
@@ -106,15 +118,21 @@ class Runner():
                         self.parallel.n_completed_tasks += self.batch_size
                         this_batch_duration = time.time() - self.dispatch_timestamp
 
-                        self.parallel._backend.batch_completed(self.batch_size,
-                                                               this_batch_duration)
+                        self.parallel._backend.batch_completed(
+                            self.batch_size, this_batch_duration
+                        )
 
                         self.parallel.print_progress()
                         # Update progress bar
-                        progress.update(task, completed=self.parallel.n_completed_tasks, refresh=True)
+                        progress.update(
+                            task,
+                            completed=self.parallel.n_completed_tasks,
+                            refresh=True,
+                        )
                         with self.parallel._lock:
                             if self.parallel._original_iterator is not None:
                                 self.parallel.dispatch_next()
+
                 # Monkey patch
                 joblib.parallel.BatchCompletionCallBack = BatchCompletionCallBack
                 self._run(func, settings)

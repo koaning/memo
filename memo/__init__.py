@@ -17,5 +17,5 @@ __all__ = [
     "memfunc",
     "memweb",
     "time_taken",
-    "Runner"
+    "Runner",
 ]
