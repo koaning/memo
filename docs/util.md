@@ -11,7 +11,14 @@
         show_root_full_path: false
         show_root_heading: true
 
+
 ::: memo.time_taken
+    rendering:
+        show_root_full_path: false
+        show_root_heading: true
+
+
+::: memo.Runner
     rendering:
         show_root_full_path: false
         show_root_heading: true
