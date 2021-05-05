@@ -17,8 +17,7 @@ class Runner:
 
     All keyword arguments during instantiaition will pass through to `parallel_backend`.
     More information on joblib can be found [here](https://joblib.readthedocs.io/en/latest/parallel.html).
-    Joblib can also attach to third party backends such as Ray or Apache spark,
-    however that functionality has not yet been tested.
+    Joblib can also attach to third party backends such as Ray or Apache spark.
 
     Usage:
 
@@ -26,6 +25,11 @@ class Runner:
     from memo import Runner
 
     runner = Runner(backend='threading', n_jobs=2)
+    ```
+
+    With Ray Backend From the command line
+    ```shell
+    ray start --head --port=6379
     ```
     """
 
@@ -45,6 +49,16 @@ class Runner:
         """run the parallel backend
         Private. All arguments passed through run method
         """
+        if self.backend == "ray":
+            try:
+                from ray.util.joblib import register_ray
+                register_ray()
+            except ImportError as e:
+                import sys
+                raise type(e)(
+                    str(e) + "\nRay backend must be installed"
+                ).with_traceback(sys.exc_info()[2])
+
         try:
             with parallel_backend(*self.args, self.backend, self.n_jobs, **self.kwargs):
                 Parallel(require="sharedmem")(
