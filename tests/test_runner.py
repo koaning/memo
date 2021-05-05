@@ -1,10 +1,12 @@
 import pytest
 from memo import memlist, Runner, grid
+import ray
+ray.init(address='auto', _redis_password='5241590000000000')
 
 
 @pytest.mark.parametrize(
     "kw",
-    [{"backend": "loky"}, {"backend": "threading"}, {"backend": "multiprocessing"}],
+    [{"backend": "loky"}, {"backend": "threading"}, {"backend": "multiprocessing"}, {"backend": "ray"}],
 )
 def test_base_multiple_calls(kw):
     data = []
@@ -21,7 +23,7 @@ def test_base_multiple_calls(kw):
 
 @pytest.mark.parametrize(
     "kw",
-    [{"backend": "loky"}, {"backend": "threading"}, {"backend": "multiprocessing"}],
+    [{"backend": "loky"}, {"backend": "threading"}, {"backend": "multiprocessing"}, {"backend": "ray"}],
 )
 def test_keys_included(kw):
     data = []
@@ -39,7 +41,7 @@ def test_keys_included(kw):
 
 @pytest.mark.parametrize(
     "kw",
-    [{"backend": "loky"}, {"backend": "threading"}, {"backend": "multiprocessing"}],
+    [{"backend": "loky"}, {"backend": "threading"}, {"backend": "multiprocessing"}, {"backend": "ray"}],
 )
 def test_base_args_included(kw):
     data = []
@@ -62,7 +64,7 @@ def test_base_args_included(kw):
 
 def test_raises_type_error():
     data = []
-    g = {"a": 3, "b": 4, "c": 5}
+    g = [{"a": 3, "b": 4, "c": 5}]
 
     with pytest.raises(TypeError):
 
