@@ -1,10 +1,8 @@
 import random
 import itertools as it
 
-from rich.progress import track
 
-
-def grid(progbar=True, **kwargs):
+def grid(shuffle=True, **kwargs):
     """
     Generates a grid of settings.
 
@@ -16,7 +14,7 @@ def grid(progbar=True, **kwargs):
     ```python
     from memo import grid
 
-    settings = list(grid(a=[1,2], b=[1, 2]))
+    settings = grid(a=[1,2], b=[1, 2], shuffle=False)
     expected = [
          {'a': 1, 'b': 1},
          {'a': 1, 'b': 2},
@@ -32,16 +30,13 @@ def grid(progbar=True, **kwargs):
         print(calc_sum(**setting))
     ```
     """
-    settings = list(it.product(*[v for v in kwargs.values()]))
-    if progbar:
-        for s in track(settings, description="Grid..."):
-            yield {k: v for k, v in zip(kwargs.keys(), s)}
-    else:
-        for s in settings:
-            yield {k: v for k, v in zip(kwargs.keys(), s)}
+    settings = [dict(zip(kwargs.keys(), d)) for d in it.product(*[v for v in kwargs.values()])]
+    if shuffle:
+        random.shuffle(settings)
+    return settings
 
 
-def random_grid(progbar=True, n=30, **kwargs):
+def random_grid(n=30, **kwargs):
     """
     Generates a random grid settings.
 
@@ -53,14 +48,8 @@ def random_grid(progbar=True, n=30, **kwargs):
     ```python
     from memo import random_grid
 
-    settings = list(random_grid(n=30, a=[1,2], b=[1, 2]))
+    settings = random_grid(n=30, a=[1,2], b=[1, 2])
     assert len(settings) == 30
     ```
     """
-
-    if progbar:
-        for _ in track(range(n), description="Random Grid..."):
-            yield {k: random.choice(v) for k, v in kwargs.items()}
-    else:
-        for _ in range(n):
-            yield {k: random.choice(v) for k, v in kwargs.items()}
+    return [{k: random.choice(v) for k, v in kwargs.items()} for _ in range(n)]
