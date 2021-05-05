@@ -5,6 +5,7 @@ import joblib.parallel
 from rich.progress import Progress
 import time
 import warnings
+from memo import NotInstalled
 
 
 class Runner:
@@ -12,14 +13,15 @@ class Runner:
     Run functions in parallel with joblib.
 
     Arguments:
-        backend: choice of parallism backend, can be "loky", "multiprocessing" or "threading"
+        backend: choice of parallism backend, can be "loky", "multiprocessing", "threading", or "ray"
         n_jobs: degree of parallism, set to -1 to use all available cores
 
     All keyword arguments during instantiaition will pass through to `parallel_backend`.
     More information on joblib can be found [here](https://joblib.readthedocs.io/en/latest/parallel.html).
-    Joblib can also attach to third party backends such as Ray or Apache spark.
+    Joblib can also attach to third party backends such as [Ray](https://docs.ray.io/en/releases-1.3.0/) or Apache spark.
 
     Usage:
+
 
     ```python
     from memo import Runner
@@ -27,10 +29,19 @@ class Runner:
     runner = Runner(backend='threading', n_jobs=2)
     ```
 
+
     With Ray Backend From the command line
     ```shell
     ray start --head --port=6379
     ```
+
+    ```python
+    from memo import Runner
+
+    runner = Runner(backend='ray', n_jobs=-1)
+    ```
+
+
     """
 
     def __init__(
@@ -53,11 +64,8 @@ class Runner:
             try:
                 from ray.util.joblib import register_ray
                 register_ray()
-            except ImportError as e:
-                import sys
-                raise type(e)(
-                    str(e) + "\nRay backend must be installed"
-                ).with_traceback(sys.exc_info()[2])
+            except ImportError:
+                NotInstalled("ray", "dev")
 
         try:
             with parallel_backend(*self.args, self.backend, self.n_jobs, **self.kwargs):
