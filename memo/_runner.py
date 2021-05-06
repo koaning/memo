@@ -65,7 +65,7 @@ class Runner:
                 from ray.util.joblib import register_ray
                 register_ray()
             except ImportError:
-                NotInstalled("ray", "dev")
+                NotInstalled("ray", "ray")
 
         try:
             with parallel_backend(*self.args, self.backend, self.n_jobs, **self.kwargs):
