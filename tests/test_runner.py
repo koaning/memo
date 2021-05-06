@@ -1,7 +1,7 @@
 import pytest
 from memo import memlist, Runner, grid
 import ray
-ray.init(address='auto', _redis_password='5241590000000000')
+ray.init()
 
 
 @pytest.mark.parametrize(
