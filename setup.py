@@ -7,8 +7,7 @@ test_packages = [
     "pytest>=4.0.2",
     "numpy>=1.19.4",
     "mktestdocs>=0.1.0",
-    "tqdm>=4.54.0",
-    "ray>=1.3.0"
+    "tqdm>=4.54.0"
 ] + base_packages
 
 util_packages = [
@@ -26,6 +25,8 @@ dev_packages = util_packages + docs_packages + test_packages
 
 web_packages = ["httpx>=0.16.1"] + base_packages
 
+ray_packages = ["ray>=1.3.0"] + base_packages
+
 setup(
     name="memo",
     version="0.1.3",
@@ -35,5 +36,6 @@ setup(
         "web": web_packages,
         "test": test_packages,
         "dev": dev_packages,
+        "ray": ray_packages
     },
 )

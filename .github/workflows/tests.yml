@@ -23,12 +23,10 @@ jobs:
       run: |
         python -m pip install -e "."
         python -m pip install -e ".[test]"
+        python -m pip install -e ".[ray]"
     - name: Lint with flake8
       run: |
         flake8
-    - name: Start local ray server
-      run: |
-        ray start --head --port=6379 --redis-password=5241590000000000
     - name: Test with pytest
       run: |
         pytest
