@@ -30,7 +30,9 @@ def grid(shuffle=True, **kwargs):
         print(calc_sum(**setting))
     ```
     """
-    settings = [dict(zip(kwargs.keys(), d)) for d in it.product(*[v for v in kwargs.values()])]
+    settings = [
+        dict(zip(kwargs.keys(), d)) for d in it.product(*[v for v in kwargs.values()])
+    ]
     if shuffle:
         random.shuffle(settings)
     return settings
