@@ -1,10 +1,10 @@
 ## Base Scenario
 
-Let's say you're running a simulation, or maybe a machine learning experiment. Then you 
-might have code that looks like this; 
+Let's say you're running a simulation, or maybe a machine learning experiment. Then you
+might have code that looks like this;
 
 ```python
-import numpy as np 
+import numpy as np
 
 def birthday_experiment(class_size, n_sim=10_000):
     """Simulates the birthday paradox. Vectorized = Fast!"""
@@ -16,18 +16,18 @@ def birthday_experiment(class_size, n_sim=10_000):
 results = [birthday_experiment(s) for s in range(2, 40)]
 ```
 
-This example sort of works, but how would we now go about plotting our results? If you want 
+This example sort of works, but how would we now go about plotting our results? If you want
 to plot the effect of `class_size` and the simulated probability then it'd be do-able. But things
-get tricky if you're also interested in seeing the effect of `n_sim` as well. The input of the 
-simulation isn't nicely captured together with the output of the simulation. 
+get tricky if you're also interested in seeing the effect of `n_sim` as well. The input of the
+simulation isn't nicely captured together with the output of the simulation.
 
 ## Decorators
 
 The idea behind this library is that you can rewrite this function, only slightly, to make
-all of this data collection a whole log simpler. 
+all of this data collection a whole log simpler.
 
 ```python
-import numpy as np 
+import numpy as np
 from memo import memlist
 
 data = []
@@ -52,15 +52,15 @@ via `pd.DataFrame(data)`.
 ## Logging More
 
 The `memlist` decorate takes care of all data collection. It captures all keyword
-arguments of the function as well as the dictionary output of the function. This 
-then is appended this to a list `data`. Especially when you're iteration on your 
-experiments this might turn out to be a lovely pattern. 
+arguments of the function as well as the dictionary output of the function. This
+then is appended this to a list `data`. Especially when you're iteration on your
+experiments this might turn out to be a lovely pattern.
 
 For example, suppose we also want to log how long the simulation takes;
 
 ```python
-import time 
-import numpy as np 
+import time
+import numpy as np
 from memo import memlist
 
 data = []
@@ -81,14 +81,14 @@ for size in range(2, 40):
         birthday_experiment(class_size=size, n_sim=n_sim)
 ```
 
-## Power 
+## Power
 
-The real power of the library is that you can choose not only to log to 
-a list. You can just as easily write to a file too! 
+The real power of the library is that you can choose not only to log to
+a list. You can just as easily write to a file too!
 
 ```python
-import time 
-import numpy as np 
+import time
+import numpy as np
 from memo import memlist, memfile
 
 data = []
@@ -110,15 +110,15 @@ for size in range(2, 40):
         birthday_experiment(class_size=size, n_sim=n_sim)
 ```
 
-## Utilities 
+## Utilities
 
-The library also offers utilities to make the creation of these grids even easier. In particular; 
+The library also offers utilities to make the creation of these grids even easier. In particular;
 
-- We supply a grid generation mechanism to prevent a lot of for-loops. 
+- We supply a grid generation mechanism to prevent a lot of for-loops.
 - We supply a `@capture_time` so that you don't need to write that logic yourself.
 
 ```python
-import numpy as np 
+import numpy as np
 from memo import memlist, memfile, grid, time_taken
 
 data = []
@@ -138,10 +138,10 @@ for settings in grid(class_size=range(2, 40), n_sim=[1000, 10000, 100000]):
     birthday_experiment(**settings)
 ```
 
-## Parallel 
+## Parallel
 
 If you have a lot of simulations you'd like to run, it might be helpful to
-run them in parallel. That's why this library also hosts a `Runner` class 
+run them in parallel. That's why this library also hosts a `Runner` class
 that can run your functions on multiple CPU cores.
 
 ```python
@@ -162,7 +162,7 @@ def birthday_experiment(class_size, n_sim):
     proba = np.mean(n_uniq != class_size)
     return {"est_proba": proba}
 
-settings = grid(class_size=range(20, 30), n_sim=[100, 10_000, 1_000_000], progbar=False)
+settings = list(grid(class_size=range(20, 30), n_sim=[100, 10_000, 1_000_000], progbar=False))
 
 # To Run in parallel
 runner = Runner(backend="threading", n_jobs=-1)
@@ -173,10 +173,10 @@ runner.run(func=birthday_experiment, settings=settings)
 
 These decorators aren't performing magic, but my experience has been
 that these decorators make it more fun to actually log the results of experiments.
-It's nice to be able to just add a decorator to a function and not have to 
+It's nice to be able to just add a decorator to a function and not have to
 worry about logging the statistics.
 
-The library also offers extra features to make things a whole *log* simpler.  
+The library also offers extra features to make things a whole _log_ simpler.
 
 - `memweb` sends the json blobs to a server via http-post requests
 - `memfunc` sends the data to a callable that you supply, like `print`
