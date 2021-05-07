@@ -6,14 +6,14 @@ a dataframe and functions can have multiple outputs.
 
 ## Can I add a progress bar? 
 
-You get a progress bar when you're using our internal `grid` method.
+You get a progress bar if you're using a `Runner`
 
 ### Demo 
 
 ```python
 import numpy as np
 
-from memo import memlist, memfile, grid, time_taken
+from memo import memlist, memfile, grid, time_taken, Runner
 
 data = []
 
@@ -30,11 +30,12 @@ def birthday_experiment(class_size, n_sim):
     return {"est_proba": proba}
 
 
-for setting in grid(class_size=range(20, 30), n_sim=[100, 10_000, 1_000_000]):
-    birthday_experiment(**setting)
-```
+settings = grid(class_size=range(20, 30), n_sim=[100, 10_000, 1_000_000])
 
-Note that you can turn the progress bar off via `grid(progbar=False, ...)`.
+# This runner comes with a progress bar
+runner = Runner(backend="threading", n_jobs=1)
+runner.run(func=birthday_experiment, settings=settings)
+```
 
 ## Can I get amazing visualisations? 
 

@@ -77,7 +77,7 @@ def test_raises_type_error():
 
 def test_generator_progbar_warning():
     data = []
-    g = grid(class_size=[5, 6], n_sim=[1000, 1_000_000])
+    g = (s for s in grid(class_size=[5, 6], n_sim=[1000, 1_000_000]))
 
     with pytest.warns(
         UserWarning, match="Progress bar not supported for generator settings"

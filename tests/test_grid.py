@@ -2,7 +2,8 @@ from memo import grid, random_grid
 
 
 def test_grid():
-    inputs = [i for i in grid(a="abc", b="abcd")]
+    inputs = grid(a="abc", b="abcd")
+    print(inputs)
     assert len(inputs) == 12
     assert all(["a" in i for i in inputs])
     assert all(["b" in i for i in inputs])
