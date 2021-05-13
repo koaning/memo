@@ -2,7 +2,7 @@ import random
 import itertools as it
 
 
-def grid(shuffle=True, **kwargs):
+def grid(shuffle=True, progbar=None, **kwargs):
     """
     Generates a grid of settings.
 
@@ -16,10 +16,10 @@ def grid(shuffle=True, **kwargs):
 
     settings = grid(a=[1,2], b=[1, 2], shuffle=False)
     expected = [
-         {'a': 1, 'b': 1},
-         {'a': 1, 'b': 2},
-         {'a': 2, 'b': 1},
-         {'a': 2, 'b': 2}
+        {'a': 1, 'b': 1},
+        {'a': 1, 'b': 2},
+        {'a': 2, 'b': 1},
+        {'a': 2, 'b': 2}
     ]
     assert settings == expected
 
@@ -33,6 +33,8 @@ def grid(shuffle=True, **kwargs):
     settings = [
         dict(zip(kwargs.keys(), d)) for d in it.product(*[v for v in kwargs.values()])
     ]
+    if progbar:
+        raise DeprecationWarning("`progbar` is deprecated, use a `from memo import Runner` to get a progbar.")
     if shuffle:
         random.shuffle(settings)
     return settings
