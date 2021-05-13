@@ -22,12 +22,6 @@ def grid(shuffle=True, progbar=None, **kwargs):
         {'a': 2, 'b': 2}
     ]
     assert settings == expected
-
-    def calc_sum(a, b):
-        return {"c": a + b}
-
-    for setting in settings:
-        print(calc_sum(**setting))
     ```
     """
     settings = [
