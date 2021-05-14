@@ -293,6 +293,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parallel" class="md-nav__link">
+    Parallel
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#more-features" class="md-nav__link">
     More features
   </a>
@@ -351,6 +358,18 @@
   <li class="md-nav__item">
     <a href="api.html" class="md-nav__link">
       Main
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="runner.html" class="md-nav__link">
+      Runner
     </a>
   </li>
 
@@ -424,6 +443,13 @@
         <li class="md-nav__item">
   <a href="#utilities" class="md-nav__link">
     Utilities
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parallel" class="md-nav__link">
+    Parallel
   </a>
   
 </li>
@@ -577,6 +603,34 @@ a list. You can just as easily write to a file too! </p>
     <span class="n">birthday_experiment</span><span class="p">(</span><span class="o">**</span><span class="n">settings</span><span class="p">)</span>
 </code></pre></div>
 
+<h2 id="parallel">Parallel<a class="headerlink" href="#parallel" title="Permanent link">&para;</a></h2>
+<p>If you have a lot of simulations you'd like to run, it might be helpful to
+run them in parallel. That's why this library also hosts a <code>Runner</code> class 
+that can run your functions on multiple CPU cores.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">memlist</span><span class="p">,</span> <span class="n">memfile</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">time_taken</span><span class="p">,</span> <span class="n">Runner</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="nd">@memfile</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;results.jsonl&quot;</span><span class="p">)</span>
+<span class="nd">@memlist</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<span class="nd">@time_taken</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">birthday_experiment</span><span class="p">(</span><span class="n">class_size</span><span class="p">,</span> <span class="n">n_sim</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simulates the birthday paradox. Vectorized = Fast!&quot;&quot;&quot;</span>
+    <span class="n">sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">365</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">n_sim</span><span class="p">,</span> <span class="n">class_size</span><span class="p">))</span>
+    <span class="n">sort_sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">sims</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">n_uniq</span> <span class="o">=</span> <span class="p">(</span><span class="n">sort_sims</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">!=</span> <span class="n">sort_sims</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">proba</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">n_uniq</span> <span class="o">!=</span> <span class="n">class_size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;est_proba&quot;</span><span class="p">:</span> <span class="n">proba</span><span class="p">}</span>
+
+<span class="n">settings</span> <span class="o">=</span> <span class="n">grid</span><span class="p">(</span><span class="n">class_size</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">n_sim</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">,</span> <span class="mi">1_000_000</span><span class="p">])</span>
+
+<span class="c1"># To Run in parallel</span>
+<span class="n">runner</span> <span class="o">=</span> <span class="n">Runner</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="s2">&quot;threading&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">birthday_experiment</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">)</span>
+</code></pre></div>
+
 <h2 id="more-features">More features<a class="headerlink" href="#more-features" title="Permanent link">&para;</a></h2>
 <p>These decorators aren't performing magic, but my experience has been
 that these decorators make it more fun to actually log the results of experiments.
@@ -584,15 +638,10 @@ It's nice to be able to just add a decorator to a function and not have to
 worry about logging the statistics.</p>
 <p>The library also offers extra features to make things a whole <em>log</em> simpler.  </p>
 <ul>
-<li><code>memlists</code> sends the json blobs to a list</li>
-<li><code>memfile</code> sends the json blobs to a file </li>
 <li><code>memweb</code> sends the json blobs to a server via http-post requests</li>
 <li><code>memfunc</code> sends the data to a callable that you supply, like <code>print</code></li>
-<li><code>grid</code> generates a convenient grid for your experiments</li>
 <li><code>random_grid</code> generates a randomized grid for your experiments</li>
-<li><code>time_taken</code> also logs the time the function takes to run</li>
 </ul>
-<p>Check out the <a href="">API docs</a> to explore these in more detail.</p>
                 
               
               

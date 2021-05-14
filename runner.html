@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://koaning.github.io/memo/util.html">
+        <link rel="canonical" href="https://koaning.github.io/memo/runner.html">
       
       
         <meta name="author" content="Vincent D. Warmerdam">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Utility - Memo Docs</title>
+        <title>Runner - Memo Docs</title>
       
     
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#utility-methods" class="md-skip">
+        <a href="#memo._runner.Runner" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Utility
+              Runner
             
           </span>
         </div>
@@ -290,18 +290,6 @@
           
           
 
-
-  <li class="md-nav__item">
-    <a href="runner.html" class="md-nav__link">
-      Runner
-    </a>
-  </li>
-
-        
-          
-          
-          
-
   
 
 
@@ -309,23 +297,19 @@
     
     <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
-      
-    
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Utility
+        Runner
         <span class="md-nav__icon md-icon"></span>
       </label>
     
-    <a href="util.html" class="md-nav__link md-nav__link--active">
-      Utility
+    <a href="runner.html" class="md-nav__link md-nav__link--active">
+      Runner
     </a>
     
       
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
-  
-    
   
   
     <label class="md-nav__title" for="__toc">
@@ -335,23 +319,22 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#memo._grid.grid" class="md-nav__link">
-    grid()
+  <a href="#memo._runner.Runner" class="md-nav__link">
+    Runner
+  </a>
+  
+    <nav class="md-nav" aria-label="Runner">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memo._runner.Runner.run" class="md-nav__link">
+    run()
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#memo._grid.random_grid" class="md-nav__link">
-    random_grid()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#memo._util.time_taken" class="md-nav__link">
-    time_taken()
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -359,6 +342,18 @@
   
 </nav>
     
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="util.html" class="md-nav__link">
+      Utility
+    </a>
   </li>
 
         
@@ -381,8 +376,6 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -391,23 +384,22 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#memo._grid.grid" class="md-nav__link">
-    grid()
+  <a href="#memo._runner.Runner" class="md-nav__link">
+    Runner
+  </a>
+  
+    <nav class="md-nav" aria-label="Runner">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memo._runner.Runner.run" class="md-nav__link">
+    run()
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#memo._grid.random_grid" class="md-nav__link">
-    random_grid()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#memo._util.time_taken" class="md-nav__link">
-    time_taken()
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -423,22 +415,22 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/koaning/memo/edit/master/docs/util.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/koaning/memo/edit/master/docs/runner.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="utility-methods">Utility Methods<a class="headerlink" href="#utility-methods" title="Permanent link">&para;</a></h1>
-<div class="doc doc-object doc-function">
-<h2 class="doc doc-heading" id="memo._grid.grid">
+                  <h1>Runner</h1>
+                
+                <div class="doc doc-object doc-class">
+<h2 class="doc doc-heading" id="memo._runner.Runner">
 
-        <code class="highlight language-python">
-grid<span class="p">(</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">progbar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>        </code>
+        <code>Runner</code>
 
 
-      <a class="headerlink" href="#memo._grid.grid" title="Permanent link">&para;</a></h2>
+      <a class="headerlink" href="#memo._runner.Runner" title="Permanent link">&para;</a></h2>
 <div class="doc doc-contents first">
-<p>Generates a grid of settings.</p>
+<p>Run functions in parallel with joblib.</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -451,77 +443,45 @@ grid<span class="p">(</span><span class="n">shuffle</span><span class="o">=</spa
 </thead>
 <tbody>
 <tr>
-<td><code>kwargs</code></td>
+<td><code>backend</code></td>
 <td><code></code></td>
 <td>
-<p>the name of parameter is the key while the values represent items to iterate over</p>
+<p>choice of parallism backend, can be "loky", "multiprocessing" or "threading"</p>
 </td>
-<td><code>{}</code></td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>n_jobs</code></td>
+<td><code></code></td>
+<td>
+<p>degree of parallism, set to -1 to use all available cores</p>
+</td>
+<td><em>required</em></td>
 </tr>
 </tbody>
 </table>
-<p>Example</p>
+<p>All keyword arguments during instantiaition will pass through to <code>parallel_backend</code>.
+More information on joblib can be found <a href="https://joblib.readthedocs.io/en/latest/parallel.html">here</a>.
+Joblib can also attach to third party backends such as Ray or Apache spark,
+however that functionality has not yet been tested.</p>
+<p>Usage:</p>
 <div class="codehilite">
-<pre><span></span><code><span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">grid</span>
+<pre><span></span><code><span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">Runner</span>
 
-<span class="n">settings</span> <span class="o">=</span> <span class="n">grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">b</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">expected</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
-    <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
-    <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
-    <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
-<span class="p">]</span>
-<span class="k">assert</span> <span class="n">settings</span> <span class="o">==</span> <span class="n">expected</span>
+<span class="n">runner</span> <span class="o">=</span> <span class="n">Runner</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="s1">'threading'</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </code></pre>
 </div>
-<details class="quote">
-          <summary>Source code in <code>memo/_grid.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">grid</span><span class="p">(</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">progbar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">"""</span>
-<span class="sd">    Generates a grid of settings.</span>
-
-<span class="sd">    Arguments:</span>
-<span class="sd">        kwargs: the name of parameter is the key while the values represent items to iterate over</span>
-
-<span class="sd">    Example</span>
-
-<span class="sd">    ```python</span>
-<span class="sd">    from memo import grid</span>
-
-<span class="sd">    settings = grid(a=[1,2], b=[1, 2], shuffle=False)</span>
-<span class="sd">    expected = [</span>
-<span class="sd">        {'a': 1, 'b': 1},</span>
-<span class="sd">        {'a': 1, 'b': 2},</span>
-<span class="sd">        {'a': 2, 'b': 1},</span>
-<span class="sd">        {'a': 2, 'b': 2}</span>
-<span class="sd">    ]</span>
-<span class="sd">    assert settings == expected</span>
-<span class="sd">    ```</span>
-<span class="sd">    """</span>
-    <span class="n">settings</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">d</span><span class="p">))</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">it</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span>
-    <span class="p">]</span>
-    <span class="k">if</span> <span class="n">progbar</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">DeprecationWarning</span><span class="p">(</span><span class="s2">"`progbar` is deprecated, use a `from memo import Runner` to get a progbar."</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
-        <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">settings</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h2 class="doc doc-heading" id="memo._grid.random_grid">
+<div class="doc doc-children">
+<div class="doc doc-object doc-method">
+<h3 class="doc doc-heading" id="memo._runner.Runner.run">
 
         <code class="highlight language-python">
-random_grid<span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>        </code>
+run<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">progbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>        </code>
 
 
-      <a class="headerlink" href="#memo._grid.random_grid" title="Permanent link">&para;</a></h2>
-<div class="doc doc-contents first">
-<p>Generates a random grid settings.</p>
+      <a class="headerlink" href="#memo._runner.Runner.run" title="Permanent link">&para;</a></h3>
+<div class="doc doc-contents ">
+<p>Run function with joblibs parallel backend</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -534,91 +494,52 @@ random_grid<span class="p">(</span><span class="n">n</span><span class="o">=</sp
 </thead>
 <tbody>
 <tr>
-<td><code>kwargs</code></td>
-<td><code></code></td>
+<td><code>func</code></td>
+<td><code>Callable</code></td>
 <td>
-<p>the name of parameter is the key while the values represent items to iterate over</p>
+<p>The function to be run in parallel.</p>
 </td>
-<td><code>{}</code></td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>settings</code></td>
+<td><code>Iterable[Dict]</code></td>
+<td>
+<p>An Iterable of Key-value pairs.</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>progbar</code></td>
+<td><code>bool</code></td>
+<td>
+<p>Show progress bar. Defaults to True.</p>
+</td>
+<td><code>True</code></td>
 </tr>
 </tbody>
 </table>
-<p>Example</p>
-<div class="codehilite">
-<pre><span></span><code><span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">random_grid</span>
-
-<span class="n">settings</span> <span class="o">=</span> <span class="n">random_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">b</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span> <span class="o">==</span> <span class="mi">30</span>
-</code></pre>
-</div>
-<details class="quote">
-          <summary>Source code in <code>memo/_grid.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">random_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">"""</span>
-<span class="sd">    Generates a random grid settings.</span>
-
-<span class="sd">    Arguments:</span>
-<span class="sd">        kwargs: the name of parameter is the key while the values represent items to iterate over</span>
-
-<span class="sd">    Example</span>
-
-<span class="sd">    ```python</span>
-<span class="sd">    from memo import random_grid</span>
-
-<span class="sd">    settings = random_grid(n=30, a=[1,2], b=[1, 2])</span>
-<span class="sd">    assert len(settings) == 30</span>
-<span class="sd">    ```</span>
-<span class="sd">    """</span>
-    <span class="k">return</span> <span class="p">[{</span><span class="n">k</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h2 class="doc doc-heading" id="memo._util.time_taken">
-
-        <code class="highlight language-python">
-time_taken<span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rounding</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>        </code>
-
-
-      <a class="headerlink" href="#memo._util.time_taken" title="Permanent link">&para;</a></h2>
-<div class="doc doc-contents first">
-<p>Adds additional time-based information to output.</p>
-<p><strong>Parameters:</strong></p>
+<p><strong>Exceptions:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
 <th>Type</th>
 <th>Description</th>
-<th>Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>minutes</code></td>
-<td><code></code></td>
+<td><code>TypeError</code></td>
 <td>
-<p>log minutes instead of seconds</p>
+<p>When **kwargs doesn't match signature of <code>parallel_backend</code></p>
 </td>
-<td><code>False</code></td>
-</tr>
-<tr>
-<td><code>rounding</code></td>
-<td><code></code></td>
-<td>
-<p>number of decimals to round the timing to</p>
-</td>
-<td><code>2</code></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Examples:</strong></p>
-<br />
+<p>Usage:</p>
 <div class="codehilite">
-<pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><span></span><code><span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">Runner</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">memlist</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">time_taken</span>
 
@@ -630,31 +551,37 @@ time_taken<span class="p">(</span><span class="n">minutes</span><span class="o">
 <span class="k">def</span> <span class="nf">birthday_experiment</span><span class="p">(</span><span class="n">class_size</span><span class="p">,</span> <span class="n">n_sim</span><span class="p">):</span>
     <span class="n">sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">365</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">n_sim</span><span class="p">,</span> <span class="n">class_size</span><span class="p">))</span>
     <span class="n">sort_sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">sims</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">n_uniq</span> <span class="o">=</span> <span class="p">(</span><span class="n">sort_sims</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">!=</span> <span class="n">sort_sims</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">n_uniq</span> <span class="o">=</span> <span class="p">(</span><span class="n">sort_sims</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">!=</span> <span class="n">sort_sims</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">proba</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">n_uniq</span> <span class="o">!=</span> <span class="n">class_size</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">{</span><span class="s2">"est_proba"</span><span class="p">:</span> <span class="n">proba</span><span class="p">}</span>
 
+<span class="n">settings</span> <span class="o">=</span> <span class="n">grid</span><span class="p">(</span><span class="n">class_size</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">n_sim</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">],</span> <span class="n">progbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-<span class="n">settings</span> <span class="o">=</span> <span class="n">grid</span><span class="p">(</span><span class="n">class_size</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="n">n_sim</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">,</span> <span class="mi">1_000_000</span><span class="p">])</span>
-
-<span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">:</span>
-    <span class="n">birthday_experiment</span><span class="p">(</span><span class="o">**</span><span class="n">setting</span><span class="p">)</span>
+<span class="c1"># To Run in parallel</span>
+<span class="n">runner</span> <span class="o">=</span> <span class="n">Runner</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="s2">"threading"</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">birthday_experiment</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">)</span>
 </code></pre>
 </div>
 <details class="quote">
-          <summary>Source code in <code>memo/_util.py</code></summary>
+          <summary>Source code in <code>memo/_runner.py</code></summary>
           <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">time_taken</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rounding</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
-    <span class="sd">"""</span>
-<span class="sd">    Adds additional time-based information to output.</span>
+<pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Dict</span><span class="p">],</span> <span class="n">progbar</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">"""Run function with joblibs parallel backend</span>
 
-<span class="sd">    Arguments:</span>
-<span class="sd">        minutes: log minutes instead of seconds</span>
-<span class="sd">        rounding: number of decimals to round the timing to</span>
+<span class="sd">    Args:</span>
+<span class="sd">        func (Callable): The function to be run in parallel.</span>
+<span class="sd">        settings (Iterable): An Iterable of Key-value pairs.</span>
+<span class="sd">        progbar (bool, optional): Show progress bar. Defaults to True.</span>
 
-<span class="sd">    Example:</span>
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeError: When **kwargs doesn't match signature of `parallel_backend`</span>
+
+<span class="sd">    Usage:</span>
 
 <span class="sd">    ```python</span>
+<span class="sd">    from memo import Runner</span>
 <span class="sd">    import numpy as np</span>
 
 <span class="sd">    from memo import memlist, grid, time_taken</span>
@@ -667,36 +594,64 @@ time_taken<span class="p">(</span><span class="n">minutes</span><span class="o">
 <span class="sd">    def birthday_experiment(class_size, n_sim):</span>
 <span class="sd">        sims = np.random.randint(1, 365 + 1, (n_sim, class_size))</span>
 <span class="sd">        sort_sims = np.sort(sims, axis=1)</span>
-<span class="sd">        n_uniq = (sort_sims[:, 1:] != sort_sims[:, :-1]).sum(axis = 1) + 1</span>
+<span class="sd">        n_uniq = (sort_sims[:, 1:] != sort_sims[:, :-1]).sum(axis=1) + 1</span>
 <span class="sd">        proba = np.mean(n_uniq != class_size)</span>
 <span class="sd">        return {"est_proba": proba}</span>
 
+<span class="sd">    settings = grid(class_size=range(20, 30), n_sim=[100, 10_000], progbar=False)</span>
 
-<span class="sd">    settings = grid(class_size=range(5, 50), n_sim=[100, 10_000, 1_000_000])</span>
-
-<span class="sd">    for setting in settings:</span>
-<span class="sd">        birthday_experiment(**setting)</span>
+<span class="sd">    # To Run in parallel</span>
+<span class="sd">    runner = Runner(backend="threading", n_jobs=-1)</span>
+<span class="sd">    runner.run(func=birthday_experiment, settings=settings)</span>
 <span class="sd">    ```</span>
 <span class="sd">    """</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
+        <span class="n">settings</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">set</span><span class="p">,</span> <span class="n">GeneratorType</span><span class="p">)</span>
+    <span class="p">):</span>  <span class="c1"># check settings is iterable</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span><span class="si">}</span><span class="s2"> not supported"</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">progbar</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="n">GeneratorType</span><span class="p">):</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">Progress</span><span class="p">()</span> <span class="k">as</span> <span class="n">progress</span><span class="p">:</span>
+            <span class="n">task</span> <span class="o">=</span> <span class="n">progress</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="s2">"[red]Runner...."</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="n">total</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-            <span class="n">time_total</span> <span class="o">=</span> <span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span>
-            <span class="k">if</span> <span class="n">minutes</span><span class="p">:</span>
-                <span class="n">time_total</span> <span class="o">=</span> <span class="n">time_total</span> <span class="o">/</span> <span class="mi">60</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">result</span><span class="p">,</span> <span class="s2">"time_taken"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">time_total</span><span class="p">,</span> <span class="n">rounding</span><span class="p">)}</span>
-            <span class="k">return</span> <span class="n">result</span>
+            <span class="k">class</span> <span class="nc">BatchCompletionCallBack</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+                <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dispatch_timestamp</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">parallel</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dispatch_timestamp</span> <span class="o">=</span> <span class="n">dispatch_timestamp</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parallel</span> <span class="o">=</span> <span class="n">parallel</span>
 
-        <span class="k">return</span> <span class="n">wrapper</span>
+                <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="o">.</span><span class="n">n_completed_tasks</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span>
+                    <span class="n">this_batch_duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch_timestamp</span>
 
-    <span class="k">return</span> <span class="n">decorator</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">batch_completed</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">this_batch_duration</span>
+                    <span class="p">)</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="o">.</span><span class="n">print_progress</span><span class="p">()</span>
+                    <span class="c1"># Update progress bar</span>
+                    <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                        <span class="n">task</span><span class="p">,</span>
+                        <span class="n">completed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="o">.</span><span class="n">n_completed_tasks</span><span class="p">,</span>
+                        <span class="n">refresh</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="o">.</span><span class="n">_original_iterator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="o">.</span><span class="n">dispatch_next</span><span class="p">()</span>
+
+            <span class="c1"># Monkey patch</span>
+            <span class="n">joblib</span><span class="o">.</span><span class="n">parallel</span><span class="o">.</span><span class="n">BatchCompletionCallBack</span> <span class="o">=</span> <span class="n">BatchCompletionCallBack</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="n">GeneratorType</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">"Progress bar not supported for generator settings"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
 </code></pre>
 </div>
 </details>
+</div>
+</div>
+</div>
 </div>
 </div>
                 
@@ -717,7 +672,7 @@ time_taken<span class="p">(</span><span class="n">minutes</span><span class="o">
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="runner.html" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="api.html" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -726,11 +681,25 @@ time_taken<span class="p">(</span><span class="n">minutes</span><span class="o">
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Runner
+                Main
               </div>
             </div>
           </a>
         
+        
+          <a href="util.html" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Utility
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
         
       </nav>
     </div>
