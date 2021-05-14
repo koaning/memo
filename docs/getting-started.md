@@ -81,6 +81,10 @@ for size in range(2, 40):
         birthday_experiment(class_size=size, n_sim=n_sim)
 ```
 
+If you now inspect `data` you'll notice it also contains the `"time"` information. 
+Note though that there's an easier method to log the time, you can use the 
+`@time_taken` decorator that this library supplies.
+
 ## Power 
 
 The real power of the library is that you can choose not only to log to 
@@ -115,7 +119,7 @@ for size in range(2, 40):
 The library also offers utilities to make the creation of these grids even easier. In particular; 
 
 - We supply a grid generation mechanism to prevent a lot of for-loops. 
-- We supply a `@capture_time` so that you don't need to write that logic yourself.
+- We supply a `@time_taken` so that you don't need to write that logic yourself.
 
 ```python
 import numpy as np 
