@@ -75,7 +75,10 @@ def birthday_experiment(class_size, n_sim):
     proba = np.mean(n_uniq != class_size)
     return {"est_proba": proba}
 
+# declare all the settings to loop over
 settings = grid(class_size=range(20, 30), n_sim=[100, 10_000, 1_000_000])
+
+# use a runner to run over all the settings
 runner = Runner(backend="threading", n_jobs=-1)
 runner.run(func=birthday_experiment, settings=settings, progbar=True)
 ```
