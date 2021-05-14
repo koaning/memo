@@ -551,6 +551,9 @@ experiments this might turn out to be a lovely pattern. </p>
         <span class="n">birthday_experiment</span><span class="p">(</span><span class="n">class_size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">n_sim</span><span class="o">=</span><span class="n">n_sim</span><span class="p">)</span>
 </code></pre></div>
 
+<p>If you now inspect <code>data</code> you'll notice it also contains the <code>"time"</code> information. 
+Note though that there's an easier method to log the time, you can use the 
+<code>@time_taken</code> decorator that this library supplies.</p>
 <h2 id="power">Power<a class="headerlink" href="#power" title="Permanent link">&para;</a></h2>
 <p>The real power of the library is that you can choose not only to log to 
 a list. You can just as easily write to a file too! </p>
@@ -581,7 +584,7 @@ a list. You can just as easily write to a file too! </p>
 <p>The library also offers utilities to make the creation of these grids even easier. In particular; </p>
 <ul>
 <li>We supply a grid generation mechanism to prevent a lot of for-loops. </li>
-<li>We supply a <code>@capture_time</code> so that you don't need to write that logic yourself.</li>
+<li>We supply a <code>@time_taken</code> so that you don't need to write that logic yourself.</li>
 </ul>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
 <span class="kn">from</span> <span class="nn">memo</span> <span class="kn">import</span> <span class="n">memlist</span><span class="p">,</span> <span class="n">memfile</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">time_taken</span>
