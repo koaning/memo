@@ -16,9 +16,9 @@ util_packages = [
 ]
 
 docs_packages = [
-    "mkdocs>=1.1",
-    "mkdocs-material>=4.6.3",
-    "mkdocstrings>=0.8.0",
+    "mkdocs==1.1.2",
+    "mkdocs-material==6.1.6",
+    "mkdocstrings==0.13.6",
 ]
 
 dev_packages = util_packages + docs_packages + test_packages
