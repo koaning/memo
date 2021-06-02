@@ -33,7 +33,7 @@ def read(fname):
 
 setup(
     name="memo",
-    version="0.2.1",
+    version="0.2.2",
     packages=find_packages(exclude=["notebooks"]),
     install_requires=base_packages,
     long_description=read("README.md"),
