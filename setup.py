@@ -43,4 +43,9 @@ setup(
         "test": test_packages,
         "dev": dev_packages,
     },
+    project_urls={
+        'Bug Tracker': 'https://github.com/koaning/memo/issues',
+        'Documentation': 'https://koaning.github.io/memo/getting-started.html',
+        'Source Code': 'https://github.com/koaning/memo'
+    },
 )
