@@ -1,4 +1,4 @@
-![](docs/header.png)
+![](https://github.com/koaning/memo/raw/main/docs/header.png)
 
 ## Installation
 
