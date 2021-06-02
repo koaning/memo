@@ -28,7 +28,9 @@ def grid(shuffle=True, progbar=None, **kwargs):
         dict(zip(kwargs.keys(), d)) for d in it.product(*[v for v in kwargs.values()])
     ]
     if progbar:
-        raise DeprecationWarning("`progbar` is deprecated, use a `from memo import Runner` to get a progbar.")
+        raise DeprecationWarning(
+            "`progbar` is deprecated, use a `from memo import Runner` to get a progbar."
+        )
     if shuffle:
         random.shuffle(settings)
     return settings
