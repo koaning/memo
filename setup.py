@@ -33,7 +33,7 @@ def read(fname):
 
 setup(
     name="memo",
-    version="0.2.1",
+    version="0.2.2",
     packages=find_packages(exclude=["notebooks"]),
     install_requires=base_packages,
     long_description=read("README.md"),
@@ -42,5 +42,11 @@ setup(
         "web": web_packages,
         "test": test_packages,
         "dev": dev_packages,
+    },
+    url="https://github.com/koaning/memo",
+    project_urls={
+        'Bug Tracker': 'https://github.com/koaning/memo/issues',
+        'Documentation': 'https://koaning.github.io/memo/getting-started.html',
+        'Source Code': 'https://github.com/koaning/memo'
     },
 )
