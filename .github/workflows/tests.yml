@@ -21,6 +21,8 @@ jobs:
         python -m pip install --upgrade pip
     - name: Install dependencies
       run: |
+        ls
+        pwd
         python -m pip install -e "."
         python -m pip install -e ".[test]"
     - name: Lint with flake8
