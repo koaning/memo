@@ -1,14 +1,30 @@
 import orjson
+import pathlib
 from typing import Callable, List
 from functools import wraps
 
 
-def memlist(data: List):
+def _contains(kwargs, datalist):
+    """Checks if certain keyword arguments appear in the datalist."""
+    for item in datalist:
+        try:
+            match = all([kwargs[k] == item[k] for k in kwargs.keys()])
+        except KeyError:
+            # If there is a key-error then we have a keyword argument
+            # that we did not search over earlier. So we must run!
+            return False
+        if match:
+            return True
+    return False
+
+
+def memlist(data: List, skip=False):
     """
     Remembers input/output of a function in python list.
 
     Arguments:
         data: a list to push received data into
+        skip: skips the calculation if kwargs appear in data already
 
     Example
 
@@ -42,6 +58,10 @@ def memlist(data: List):
         @wraps(func)
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
+            # We might be able to skip if the parameters
+            # already appear in the dataset.
+            if skip and _contains(kwargs, data):
+                return None
             data.append({**kwargs, **result})
             return result
 
@@ -50,12 +70,13 @@ def memlist(data: List):
     return decorator
 
 
-def memfile(filepath: str):
+def memfile(filepath: str, skip: bool = False):
     """
     Remembers input/output of a function in a jsonl file on disk.
 
     Arguments:
         filepath: path to write data to
+        skip: skips the calculation if kwargs appear in data already
 
     ```python
     from memo import memfile
@@ -74,7 +95,15 @@ def memfile(filepath: str):
         @wraps(func)
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
+            if skip:
+                if pathlib.Path(filepath).exists():
+                    with open(filepath, "r") as f:
+                        datalist = [orjson.loads(line) for line in list(f)]
+                else:
+                    datalist = []
             with open(filepath, "a") as f:
+                if skip and _contains(kwargs, datalist):
+                    return None
                 ser = orjson.dumps(
                     {**kwargs, **result},
                     option=orjson.OPT_NAIVE_UTC | orjson.OPT_SERIALIZE_NUMPY,

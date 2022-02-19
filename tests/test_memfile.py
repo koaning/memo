@@ -58,3 +58,15 @@ def test_also_works_with_numpy2(tmp_path):
 
     count_values(a=np.array([1])[0])
     confirm_file_contents(filepath, [{"a": 1, "sum": 1}])
+
+
+def test_base_skip(tmp_path):
+    filepath = f"{tmp_path}/file.jsonl"
+
+    @memfile(filepath=filepath, skip=True)
+    def count_values(**kwargs):
+        return {"sum": sum(kwargs.values())}
+
+    for i in range(1, 5):
+        count_values(a=1)
+    confirm_file_contents(filepath, [{"a": 1, "sum": 1}])
