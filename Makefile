@@ -10,9 +10,6 @@ test:
 check: black flake test
 
 install:
-	python -m pip install -e .
-
-install-dev:
 	python -m pip install -e ".[dev]"
 	pre-commit install
 

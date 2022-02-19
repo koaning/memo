@@ -9,6 +9,7 @@ test_packages = [
     "numpy>=1.19.4",
     "mktestdocs>=0.1.0",
     "tqdm>=4.54.0",
+    "pre-commit>=2.17.0",
 ] + base_packages
 
 util_packages = [
@@ -45,8 +46,8 @@ setup(
     },
     url="https://github.com/koaning/memo",
     project_urls={
-        'Bug Tracker': 'https://github.com/koaning/memo/issues',
-        'Documentation': 'https://koaning.github.io/memo/getting-started.html',
-        'Source Code': 'https://github.com/koaning/memo'
+        "Bug Tracker": "https://github.com/koaning/memo/issues",
+        "Documentation": "https://koaning.github.io/memo/getting-started.html",
+        "Source Code": "https://github.com/koaning/memo",
     },
 )
