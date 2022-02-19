@@ -69,3 +69,16 @@ def test_base_args_included():
     assert data[0]["a"] == 1
     assert data[0]["b"] == 2
     assert data[0]["c"] == 1
+
+
+def test_skip_words():
+    data = []
+
+    @memlist(data=data, skip=True)
+    def count_values(a, b, **kwargs):
+        return {"sum": sum(kwargs.values())}
+
+    count_values(a=1, b=2, c=1)
+    assert len(data) == 1
+    count_values(a=1, b=2, c=1)
+    assert len(data) == 1

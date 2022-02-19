@@ -1,4 +1,5 @@
 import orjson
+import pathlib
 from typing import Callable, List
 from functools import wraps
 
@@ -95,8 +96,11 @@ def memfile(filepath: str, skip: bool = False):
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
             if skip:
-                with open(filepath, "r") as f:
-                    datalist = [orjson.loads(l) for l in list(f)]
+                if pathlib.Path(filepath).exists():
+                    with open(filepath, "r") as f:
+                        datalist = [orjson.loads(l) for l in list(f)]
+                else:
+                    datalist = []
             with open(filepath, "a") as f:
                 if skip and _contains(kwargs, datalist):
                     return None
