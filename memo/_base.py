@@ -98,7 +98,7 @@ def memfile(filepath: str, skip: bool = False):
             if skip:
                 if pathlib.Path(filepath).exists():
                     with open(filepath, "r") as f:
-                        datalist = [orjson.loads(l) for l in list(f)]
+                        datalist = [orjson.loads(line) for line in list(f)]
                 else:
                     datalist = []
             with open(filepath, "a") as f:
