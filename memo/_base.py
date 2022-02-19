@@ -94,8 +94,10 @@ def memfile(filepath: str, skip: bool = False):
         @wraps(func)
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
+            if skip:
+                with open(filepath, "r") as f:
+                    datalist = [orjson.loads(l) for l in list(f)]
             with open(filepath, "a") as f:
-                datalist = orjson.loads(f)
                 if skip and _contains(kwargs, datalist):
                     return None
                 ser = orjson.dumps(
