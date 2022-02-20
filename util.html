@@ -475,8 +475,8 @@ grid<span class="p">(</span><span class="n">shuffle</span><span class="o">=</spa
 </code></pre>
 </div>
 <details class="quote">
-          <summary>Source code in <code>memo/_grid.py</code></summary>
-          <div class="highlight">
+<summary>Source code in <code>memo/_grid.py</code></summary>
+<div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="nf">grid</span><span class="p">(</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">progbar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Generates a grid of settings.</span>
@@ -503,7 +503,9 @@ grid<span class="p">(</span><span class="n">shuffle</span><span class="o">=</spa
         <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">d</span><span class="p">))</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">it</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span>
     <span class="p">]</span>
     <span class="k">if</span> <span class="n">progbar</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">DeprecationWarning</span><span class="p">(</span><span class="s2">"`progbar` is deprecated, use a `from memo import Runner` to get a progbar."</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">DeprecationWarning</span><span class="p">(</span>
+            <span class="s2">"`progbar` is deprecated, use a `from memo import Runner` to get a progbar."</span>
+        <span class="p">)</span>
     <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
         <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">settings</span>
@@ -552,8 +554,8 @@ random_grid<span class="p">(</span><span class="n">n</span><span class="o">=</sp
 </code></pre>
 </div>
 <details class="quote">
-          <summary>Source code in <code>memo/_grid.py</code></summary>
-          <div class="highlight">
+<summary>Source code in <code>memo/_grid.py</code></summary>
+<div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="nf">random_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Generates a random grid settings.</span>
@@ -642,8 +644,8 @@ time_taken<span class="p">(</span><span class="n">minutes</span><span class="o">
 </code></pre>
 </div>
 <details class="quote">
-          <summary>Source code in <code>memo/_util.py</code></summary>
-          <div class="highlight">
+<summary>Source code in <code>memo/_util.py</code></summary>
+<div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="nf">time_taken</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rounding</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Adds additional time-based information to output.</span>

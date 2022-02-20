@@ -332,8 +332,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#memo._http.memweb" class="md-nav__link">
-    memweb()
+  <a href="#memo._error.memweb" class="md-nav__link">
+    memweb
   </a>
   
 </li>
@@ -419,8 +419,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#memo._http.memweb" class="md-nav__link">
-    memweb()
+  <a href="#memo._error.memweb" class="md-nav__link">
+    memweb
   </a>
   
 </li>
@@ -447,7 +447,7 @@
 <h2 class="doc doc-heading" id="memo._base.memlist">
 
         <code class="highlight language-python">
-memlist<span class="p">(</span><span class="n">data</span><span class="p">)</span>        </code>
+memlist<span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>        </code>
 
 
       <a class="headerlink" href="#memo._base.memlist" title="Permanent link">&para;</a></h2>
@@ -471,6 +471,14 @@ memlist<span class="p">(</span><span class="n">data</span><span class="p">)</spa
 <p>a list to push received data into</p>
 </td>
 <td><em>required</em></td>
+</tr>
+<tr>
+<td><code>skip</code></td>
+<td><code></code></td>
+<td>
+<p>skips the calculation if kwargs appear in data already</p>
+</td>
+<td><code>False</code></td>
 </tr>
 </tbody>
 </table>
@@ -501,14 +509,15 @@ memlist<span class="p">(</span><span class="n">data</span><span class="p">)</spa
 </code></pre>
 </div>
 <details class="quote">
-          <summary>Source code in <code>memo/_base.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">memlist</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">):</span>
+<summary>Source code in <code>memo/_base.py</code></summary>
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">memlist</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Remembers input/output of a function in python list.</span>
 
 <span class="sd">    Arguments:</span>
 <span class="sd">        data: a list to push received data into</span>
+<span class="sd">        skip: skips the calculation if kwargs appear in data already</span>
 
 <span class="sd">    Example</span>
 
@@ -542,6 +551,10 @@ memlist<span class="p">(</span><span class="n">data</span><span class="p">)</spa
         <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
         <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="c1"># We might be able to skip if the parameters</span>
+            <span class="c1"># already appear in the dataset.</span>
+            <span class="k">if</span> <span class="n">skip</span> <span class="ow">and</span> <span class="n">_contains</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">None</span>
             <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="o">**</span><span class="n">result</span><span class="p">})</span>
             <span class="k">return</span> <span class="n">result</span>
 
@@ -557,7 +570,7 @@ memlist<span class="p">(</span><span class="n">data</span><span class="p">)</spa
 <h2 class="doc doc-heading" id="memo._base.memfile">
 
         <code class="highlight language-python">
-memfile<span class="p">(</span><span class="n">filepath</span><span class="p">)</span>        </code>
+memfile<span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>        </code>
 
 
       <a class="headerlink" href="#memo._base.memfile" title="Permanent link">&para;</a></h2>
@@ -582,6 +595,14 @@ memfile<span class="p">(</span><span class="n">filepath</span><span class="p">)<
 </td>
 <td><em>required</em></td>
 </tr>
+<tr>
+<td><code>skip</code></td>
+<td><code>bool</code></td>
+<td>
+<p>skips the calculation if kwargs appear in data already</p>
+</td>
+<td><code>False</code></td>
+</tr>
 </tbody>
 </table>
 <div class="codehilite">
@@ -597,14 +618,15 @@ memfile<span class="p">(</span><span class="n">filepath</span><span class="p">)<
 </code></pre>
 </div>
 <details class="quote">
-          <summary>Source code in <code>memo/_base.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">memfile</span><span class="p">(</span><span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<summary>Source code in <code>memo/_base.py</code></summary>
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">memfile</span><span class="p">(</span><span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">skip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Remembers input/output of a function in a jsonl file on disk.</span>
 
 <span class="sd">    Arguments:</span>
 <span class="sd">        filepath: path to write data to</span>
+<span class="sd">        skip: skips the calculation if kwargs appear in data already</span>
 
 <span class="sd">    ```python</span>
 <span class="sd">    from memo import memfile</span>
@@ -623,7 +645,15 @@ memfile<span class="p">(</span><span class="n">filepath</span><span class="p">)<
         <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
         <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">skip</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                        <span class="n">datalist</span> <span class="o">=</span> <span class="p">[</span><span class="n">orjson</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">f</span><span class="p">)]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">datalist</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">skip</span> <span class="ow">and</span> <span class="n">_contains</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">datalist</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">None</span>
                 <span class="n">ser</span> <span class="o">=</span> <span class="n">orjson</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
                     <span class="p">{</span><span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="o">**</span><span class="n">result</span><span class="p">},</span>
                     <span class="n">option</span><span class="o">=</span><span class="n">orjson</span><span class="o">.</span><span class="n">OPT_NAIVE_UTC</span> <span class="o">|</span> <span class="n">orjson</span><span class="o">.</span><span class="n">OPT_SERIALIZE_NUMPY</span><span class="p">,</span>
@@ -689,8 +719,8 @@ memfunc<span class="p">(</span><span class="n">callback</span><span class="p">)<
 </code></pre>
 </div>
 <details class="quote">
-          <summary>Source code in <code>memo/_base.py</code></summary>
-          <div class="highlight">
+<summary>Source code in <code>memo/_base.py</code></summary>
+<div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="nf">memfunc</span><span class="p">(</span><span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Remembers input/output of a function by printing.</span>
@@ -732,85 +762,16 @@ memfunc<span class="p">(</span><span class="n">callback</span><span class="p">)<
 </details>
 </div>
 </div>
-<div class="doc doc-object doc-function">
-<h2 class="doc doc-heading" id="memo._http.memweb">
+<div class="doc doc-object doc-attribute">
+<h2 class="doc doc-heading" id="memo._error.memweb">
 
-        <code class="highlight language-python">
-memweb<span class="p">(</span><span class="n">url</span><span class="p">)</span>        </code>
+        <code class="highlight">
+memweb: <span class="kc">None</span>        </code>
 
 
-      <a class="headerlink" href="#memo._http.memweb" title="Permanent link">&para;</a></h2>
+      <a class="headerlink" href="#memo._error.memweb" title="Permanent link">&para;</a></h2>
 <div class="doc doc-contents first">
-<p>Remembers input/output of a function by sending it over http to an endpoint.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>Note that this decorator requires an extra dependeny. Ensure it is installed
-properly by running either;</p>
-<p><code>python -m pip install "memo[web]"</code></p>
-<p>You can also install it by installing all optional dependencies.</p>
-<p><code>python -m pip install "memo[all]"</code></p>
-</div>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>url</code></td>
-<td><code>str</code></td>
-<td>
-<p>web url to post json to</p>
-</td>
-<td><em>required</em></td>
-</tr>
-</tbody>
-</table>
-<details class="quote">
-          <summary>Source code in <code>memo/_http.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">memweb</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="sd">"""</span>
-<span class="sd">    Remembers input/output of a function by sending it over http to an endpoint.</span>
-
-<span class="sd">    Important:</span>
-<span class="sd">        Note that this decorator requires an extra dependeny. Ensure it is installed</span>
-<span class="sd">        properly by running either;</span>
-
-<span class="sd">        ```</span>
-<span class="sd">        python -m pip install "memo[web]"</span>
-<span class="sd">        ```</span>
-
-<span class="sd">        You can also install it by installing all optional dependencies.</span>
-
-<span class="sd">        ```</span>
-<span class="sd">        python -m pip install "memo[all]"</span>
-<span class="sd">        ```</span>
-
-<span class="sd">    Arguments:</span>
-<span class="sd">        url: web url to post json to</span>
-<span class="sd">    """</span>
-
-    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
-                <span class="n">_</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="o">**</span><span class="n">result</span><span class="p">})</span>
-            <span class="k">return</span> <span class="n">result</span>
-
-        <span class="k">return</span> <span class="n">wrapper</span>
-
-    <span class="k">return</span> <span class="n">decorator</span>
-</code></pre>
-</div>
-</details>
-</div>
+    </div>
 </div>
                 
               
