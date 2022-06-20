@@ -87,7 +87,7 @@ runner.run(func=birthday_experiment, settings=settings, progbar=True)
 
 This library also offers decorators to pipe to other sources.
 
-- `memlists` sends the json blobs to a list
+- `memlist` sends the json blobs to a list
 - `memfile` sends the json blobs to a file
 - `memweb` sends the json blobs to a server via http-post requests
 - `memfunc` sends the data to a callable that you supply, like `print`

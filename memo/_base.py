@@ -18,7 +18,7 @@ def _contains(kwargs, datalist):
     return False
 
 
-def memlist(data: List, skip=False):
+def memlist(data: List, skip: bool = False):
     """
     Remembers input/output of a function in python list.
 
