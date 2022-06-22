@@ -332,8 +332,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#memo._error.memweb" class="md-nav__link">
-    memweb
+  <a href="#memo._http.memweb" class="md-nav__link">
+    memweb()
   </a>
   
 </li>
@@ -419,8 +419,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#memo._error.memweb" class="md-nav__link">
-    memweb
+  <a href="#memo._http.memweb" class="md-nav__link">
+    memweb()
   </a>
   
 </li>
@@ -474,7 +474,7 @@ memlist<span class="p">(</span><span class="n">data</span><span class="p">,</spa
 </tr>
 <tr>
 <td><code>skip</code></td>
-<td><code></code></td>
+<td><code>bool</code></td>
 <td>
 <p>skips the calculation if kwargs appear in data already</p>
 </td>
@@ -511,7 +511,7 @@ memlist<span class="p">(</span><span class="n">data</span><span class="p">,</spa
 <details class="quote">
 <summary>Source code in <code>memo/_base.py</code></summary>
 <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">memlist</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<pre><span></span><code><span class="k">def</span> <span class="nf">memlist</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">skip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Remembers input/output of a function in python list.</span>
 
@@ -762,16 +762,85 @@ memfunc<span class="p">(</span><span class="n">callback</span><span class="p">)<
 </details>
 </div>
 </div>
-<div class="doc doc-object doc-attribute">
-<h2 class="doc doc-heading" id="memo._error.memweb">
+<div class="doc doc-object doc-function">
+<h2 class="doc doc-heading" id="memo._http.memweb">
 
-        <code class="highlight">
-memweb: <span class="kc">None</span>        </code>
+        <code class="highlight language-python">
+memweb<span class="p">(</span><span class="n">url</span><span class="p">)</span>        </code>
 
 
-      <a class="headerlink" href="#memo._error.memweb" title="Permanent link">&para;</a></h2>
+      <a class="headerlink" href="#memo._http.memweb" title="Permanent link">&para;</a></h2>
 <div class="doc doc-contents first">
-    </div>
+<p>Remembers input/output of a function by sending it over http to an endpoint.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Note that this decorator requires an extra dependeny. Ensure it is installed
+properly by running either;</p>
+<p><code>python -m pip install "memo[web]"</code></p>
+<p>You can also install it by installing all optional dependencies.</p>
+<p><code>python -m pip install "memo[all]"</code></p>
+</div>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>url</code></td>
+<td><code>str</code></td>
+<td>
+<p>web url to post json to</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>memo/_http.py</code></summary>
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">memweb</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Remembers input/output of a function by sending it over http to an endpoint.</span>
+
+<span class="sd">    Important:</span>
+<span class="sd">        Note that this decorator requires an extra dependeny. Ensure it is installed</span>
+<span class="sd">        properly by running either;</span>
+
+<span class="sd">        ```</span>
+<span class="sd">        python -m pip install "memo[web]"</span>
+<span class="sd">        ```</span>
+
+<span class="sd">        You can also install it by installing all optional dependencies.</span>
+
+<span class="sd">        ```</span>
+<span class="sd">        python -m pip install "memo[all]"</span>
+<span class="sd">        ```</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        url: web url to post json to</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="o">**</span><span class="n">result</span><span class="p">})</span>
+            <span class="k">return</span> <span class="n">result</span>
+
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+    <span class="k">return</span> <span class="n">decorator</span>
+</code></pre>
+</div>
+</details>
+</div>
 </div>
                 
               

@@ -477,7 +477,7 @@ grid<span class="p">(</span><span class="n">shuffle</span><span class="o">=</spa
 <details class="quote">
 <summary>Source code in <code>memo/_grid.py</code></summary>
 <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">grid</span><span class="p">(</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">progbar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<pre><span></span><code><span class="k">def</span> <span class="nf">grid</span><span class="p">(</span><span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">progbar</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Generates a grid of settings.</span>
 
@@ -556,7 +556,7 @@ random_grid<span class="p">(</span><span class="n">n</span><span class="o">=</sp
 <details class="quote">
 <summary>Source code in <code>memo/_grid.py</code></summary>
 <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">random_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<pre><span></span><code><span class="k">def</span> <span class="nf">random_grid</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Generates a random grid settings.</span>
 
@@ -601,7 +601,7 @@ time_taken<span class="p">(</span><span class="n">minutes</span><span class="o">
 <tbody>
 <tr>
 <td><code>minutes</code></td>
-<td><code></code></td>
+<td><code>bool</code></td>
 <td>
 <p>log minutes instead of seconds</p>
 </td>
@@ -609,7 +609,7 @@ time_taken<span class="p">(</span><span class="n">minutes</span><span class="o">
 </tr>
 <tr>
 <td><code>rounding</code></td>
-<td><code></code></td>
+<td><code>int</code></td>
 <td>
 <p>number of decimals to round the timing to</p>
 </td>
@@ -646,7 +646,7 @@ time_taken<span class="p">(</span><span class="n">minutes</span><span class="o">
 <details class="quote">
 <summary>Source code in <code>memo/_util.py</code></summary>
 <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">time_taken</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rounding</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<pre><span></span><code><span class="k">def</span> <span class="nf">time_taken</span><span class="p">(</span><span class="n">minutes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">rounding</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Adds additional time-based information to output.</span>
 
