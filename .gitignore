@@ -130,5 +130,6 @@ dmypy.json
 .idea
 docs/node_modules/*
 *.jsonl
+*.json
 
 .vscode
