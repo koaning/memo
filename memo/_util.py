@@ -2,7 +2,7 @@ import time
 from functools import wraps
 
 
-def time_taken(minutes=False, rounding=2):
+def time_taken(minutes: bool = False, rounding: int = 2):
     """
     Adds additional time-based information to output.
 

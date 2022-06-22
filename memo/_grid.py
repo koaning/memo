@@ -2,7 +2,7 @@ import random
 import itertools as it
 
 
-def grid(shuffle=True, progbar=None, **kwargs):
+def grid(shuffle: bool = True, progbar: bool = None, **kwargs):
     """
     Generates a grid of settings.
 
@@ -36,7 +36,7 @@ def grid(shuffle=True, progbar=None, **kwargs):
     return settings
 
 
-def random_grid(n=30, **kwargs):
+def random_grid(n: int = 30, **kwargs):
     """
     Generates a random grid settings.
 
