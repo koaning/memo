@@ -1,5 +1,7 @@
 ![](https://github.com/koaning/memo/raw/main/docs/header.png)
 
+> Looking for the programming language? You want [memo-lang](https://github.com/kach/memo) instead. 
+
 ## Installation
 
 ```
